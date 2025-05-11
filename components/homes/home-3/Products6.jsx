@@ -59,7 +59,7 @@ export default function Products6() {
                   <span className="text fw-2 price-text text-white">
                     Starting
                   </span>
-                  <span className="h2 mb-0 fw-bold text-price">$250</span>
+                  <span className="h2 mb-0 fw-bold text-price">₹250</span>
                 </div>
               </div>
             </div>
@@ -162,10 +162,10 @@ export default function Products6() {
                       </div>
                       <p className="price-wrap fw-medium">
                         <span className="new-price price-text fw-medium mb-0">
-                          ${product.price.toFixed(3)}
+                          ₹{product.price.toFixed(3)}
                         </span>
                         <span className="old-price body-md-2 text-main-2 fw-normal">
-                          ${product.oldPrice.toFixed(3)}
+                          ₹{product.oldPrice.toFixed(3)}
                         </span>
                       </p>
                     </div>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Navigation, Pagination } from "swiper/modules";
 import CountdownTimer from "@/components/common/Countdown";
+
 export default function Products1() {
   return (
     <section className="tf-sp-2 pt-xl-0">
@@ -99,10 +100,10 @@ export default function Products1() {
                       </div>
                       <p className="price-wrap fw-medium">
                         <span className="new-price price-text fw-medium text-primary mb-0">
-                          ${product.price.toFixed(3)}
+                          ₹{product.price.toFixed(3)}
                         </span>
                         <span className="old-price body-md-2 text-main-2 fw-normal">
-                          ${product.oldPrice.toFixed(3)}
+                          ₹{product.oldPrice.toFixed(3)}
                         </span>
                       </p>
                     </div>

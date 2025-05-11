@@ -1,5 +1,9 @@
 import React from "react";
 import Image from "next/image";
+import intel from "../../../public/images/hero/hero1.jpg";
+import controller from "../../../public/images/hero/controller.jpg";
+import headphone from "../../../public/images/hero/headphone.jpg";
+
 export default function Hero() {
   return (
     <div
@@ -14,7 +18,7 @@ export default function Hero() {
           >
             <a href="#" className="image img-style overflow-visible">
               <Image
-                src="/images/item/phone.png"
+                src={intel}
                 alt=""
                 className="lazyload"
                 width={794}
@@ -24,10 +28,10 @@ export default function Hero() {
             <div className="content text-center">
               <div className="box-title">
                 <p className="fw-semibold text-white h1 mb-0 lh-xxl-73">
-                  Redmi <span className="fw-1">Note 9</span>
+                  Intel <span className="fw-1"> Core i7-</span>
                 </p>
                 <p className="fw-lighter text-white fw-1 main-title-3 lh-xl-33">
-                  48MP Quad Camera All-Star
+                  14th Gen Desktop Processor
                 </p>
               </div>
               <div className="d-flex justify-content-center">
@@ -196,7 +200,7 @@ export default function Hero() {
               </div>
               <a href="#" className="d-inline-flex w-100 img-style">
                 <Image
-                  src="/images/item/controller.png"
+                  src={controller}
                   alt=""
                   className="lazyload"
                   width={688}
@@ -226,8 +230,8 @@ export default function Hero() {
                 <div className="box-price">
                   <p className="font-5 fw-light text-white">
                     <span className="text">Form</span>
-                    <span className="fw-medium h3 mb-0 text-third-2 lh-xl-49">
-                      $1.399
+                    <span className="fw-medium h3 mb-0 text-third-2 lh-xl-30">
+                      ₹4999
                     </span>
                   </p>
                 </div>
@@ -245,7 +249,7 @@ export default function Hero() {
               </div>
               <a href="#" className="d-inline-flex w-100 img-style">
                 <Image
-                  src="/images/item/headphone.png"
+                  src={headphone}
                   alt=""
                   className="lazyload"
                   width={808}

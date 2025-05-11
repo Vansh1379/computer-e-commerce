@@ -123,10 +123,10 @@ export default function Products2() {
                     </div>
                     <p className="price-wrap fw-medium">
                       <span className="new-price price-text fw-medium mb-0">
-                        ${product.price.toFixed(3)}
+                        ₹{product.price.toFixed(3)}
                       </span>
                       <span className="old-price body-md-2 text-main-2 fw-normal">
-                        ${product.oldPrice.toFixed(3)}
+                        ₹{product.oldPrice.toFixed(3)}
                       </span>
                     </p>
                   </div>
