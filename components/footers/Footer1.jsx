@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
+import logo from "../../public/images/logo.png";
+
 export default function Footer1({ fullWidth = false }) {
   const [success, setSuccess] = useState(true);
   const [showMessage, setShowMessage] = useState(false);
@@ -75,12 +77,7 @@ export default function Footer1({ fullWidth = false }) {
             <div className="ft-inner flex-wrap flex-xl-nowrap">
               <div className="ft-logo">
                 <Link href={`/`} className="logo-site">
-                  <Image
-                    alt="Logo"
-                    src="/images/logo/logo.svg"
-                    width={185}
-                    height={41}
-                  />
+                  <Image alt="Logo" src={logo} width={185} height={41} />
                 </Link>
                 <div className="method-payment">
                   <p>We accept:</p>
