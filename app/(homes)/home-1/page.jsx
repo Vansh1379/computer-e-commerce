@@ -21,11 +21,12 @@ export default function page() {
       <Header1 />
       <Hero />
       <Products1 />
-      <Features />
+      <Banner2 />
       <Products2 />
       <Banner2 />
       <Products6 />
       <Products5 />
+      <Features />
       <Footer1 />
     </>
   );

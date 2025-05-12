@@ -30,7 +30,7 @@ export default function Header1() {
                 <div className="support-wrap d-none d-xl-flex">
                   <Image
                     alt=""
-                    className="flex-shrink-0"
+                    className="shrink-0"
                     style={{ height: 44, width: 44 }}
                     src="/icons/headphone-2.svg"
                     width={44}

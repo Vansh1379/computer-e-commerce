@@ -211,7 +211,7 @@ export default function Description3() {
             <h5 className="fw-semibold">Reviews</h5>
             <div className="tab-main tab-review style-2">
               <div className="tab-rating-wrap">
-                <div className="li rating-percent flex-shrink-0">
+                <div className="li rating-percent shrink-0">
                   <p className="rate-percent">
                     4.8 <span>/ 5</span>
                   </p>
@@ -235,7 +235,7 @@ export default function Description3() {
                   <p className="text-cl-3">Based on 1.738 reviews</p>
                 </div>
                 <span className="br-line d-none d-xl-block type-vertical" />
-                <ul className="li rating-progress-list flex-shrink-0">
+                <ul className="li rating-progress-list shrink-0">
                   <li>
                     <p className="start-number body-text-3">
                       5<i className="icon-star text-third" />
