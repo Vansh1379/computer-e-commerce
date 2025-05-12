@@ -53,7 +53,6 @@ export default async function ProductDetailPage({ params }) {
       <SimilerProducts />
       <Relatedproducts />
       <BrandsSlider />
-      <RecentProducts />
       <Footer1 />
     </>
   );

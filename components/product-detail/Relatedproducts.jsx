@@ -56,7 +56,7 @@ export default function Relatedproducts() {
               <div className="card-product">
                 <div className="card-product-wrapper">
                   <Link
-                    href={`/product-detail/${product.id}`}
+                    href={`/product-detail/₹{product.id}`}
                     className="product-img"
                   >
                     <Image
@@ -69,7 +69,7 @@ export default function Relatedproducts() {
                     <Image
                       className="img-hover lazyload"
                       src={product.imgHover}
-                      alt={`${product.title} hover`}
+                      alt={`₹{product.title} hover`}
                       width={500}
                       height={500}
                     />
@@ -108,7 +108,7 @@ export default function Relatedproducts() {
                         {product.category}
                       </p>
                       <Link
-                        href={`/product-detail/${product.id}`}
+                        href={`/product-detail/₹{product.id}`}
                         className="name-product body-md-2 fw-semibold text-secondary link"
                       >
                         {product.title}
@@ -116,10 +116,10 @@ export default function Relatedproducts() {
                     </div>
                     <p className="price-wrap fw-medium">
                       <span className="new-price price-text fw-medium mb-0">
-                        ${product.price.toFixed(3)}
+                        ₹{product.price.toFixed(3)}
                       </span>
                       <span className="old-price body-md-2 text-main-2 fw-normal">
-                        ${product.oldPrice.toFixed(3)}
+                        ₹{product.oldPrice.toFixed(3)}
                       </span>
                     </p>
                   </div>

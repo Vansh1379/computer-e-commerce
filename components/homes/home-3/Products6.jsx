@@ -31,7 +31,7 @@ export default function Products6() {
           >
             <a href="#" className="image h-100">
               <Image
-                src="/images/banner/banner-12.jpg"
+                src="https://i.pinimg.com/736x/be/03/92/be0392abf9edca2f8e75d8c0f2a1cfa7.jpg"
                 alt=""
                 className="lazyload"
                 width={400}
@@ -59,7 +59,7 @@ export default function Products6() {
                   <span className="text fw-2 price-text text-white">
                     Starting
                   </span>
-                  <span className="h2 mb-0 fw-bold text-price">₹250</span>
+                  <span className="h2 mb-0 fw-bold text-price">₹2500</span>
                 </div>
               </div>
             </div>

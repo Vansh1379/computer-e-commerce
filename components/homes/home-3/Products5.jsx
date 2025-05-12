@@ -8,6 +8,7 @@ import AddToWishlist from "@/components/common/AddToWishlist";
 import AddToQuickview from "@/components/common/AddToQuickview";
 import AddToCompare from "@/components/common/AddToCompare";
 import ProductCard2 from "@/components/productCards/ProductCard2";
+
 export default function Products5() {
   return (
     <section className="tf-sp-6 position-relative">
@@ -60,10 +61,10 @@ export default function Products5() {
                       <div className="group-btn">
                         <p className="price-wrap fw-medium">
                           <span className="new-price price-text fw-medium">
-                            ${product.price.toFixed(3)}
+                            ₹{product.price.toFixed(3)}
                           </span>
                           <span className="old-price body-md-2 text-main-2">
-                            ${product.oldPrice.toFixed(3)}
+                            ₹{product.oldPrice.toFixed(3)}
                           </span>
                         </p>
                         <ul className="list-product-btn flex-row">

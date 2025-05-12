@@ -32,7 +32,7 @@ const ProductCard2 = ({
                   className="d-block tf-image-view"
                 >
                   <Image
-                    src={image}
+                    src="https://i.pinimg.com/736x/56/dd/20/56dd20cc0734a6e8aab203d7304b9a31.jpg"
                     alt={product.title}
                     className="lazyload"
                     width={857}
@@ -70,7 +70,7 @@ const ProductCard2 = ({
                 <div className="item">
                   <Image
                     alt={product.title}
-                    src={image}
+                    src="https://i.pinimg.com/736x/56/dd/20/56dd20cc0734a6e8aab203d7304b9a31.jpg"
                     width={857}
                     height={482}
                   />
@@ -101,11 +101,11 @@ const ProductCard2 = ({
           <div className="group-btn">
             <p className="price-wrap fw-medium">
               <span className="new-price h4 fw-normal text-primary mb-0">
-                ${product.price.toFixed(3)}
+                ₹{product.price.toFixed(3)}
               </span>
               {product.oldPrice && (
                 <span className="old-price price-text text-main-2">
-                  ${product.oldPrice.toFixed(3)}
+                  ₹{product.oldPrice.toFixed(3)}
                 </span>
               )}
             </p>

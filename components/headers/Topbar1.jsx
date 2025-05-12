@@ -11,7 +11,7 @@ export default function Topbar1({ parentClass = "tf-topbar line-bt" }) {
                 <i className="icon-headphone" /> Call us for free:{" "}
                 <a
                   href="tel:+18001234567"
-                  className="text-primary link-secondary fw-semibold"
+                  className="text-light-blue link-secondary fw-semibold"
                 >
                   +1(800) 123 4567
                 </a>

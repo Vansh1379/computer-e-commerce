@@ -65,24 +65,16 @@ export default function Details1({ product }) {
                         <li>
                           <p className="caption text-main-2">Sold: 349</p>
                         </li>
-                        <li className="d-flex">
-                          <Link
-                            href={`/shop-default`}
-                            className="caption text-secondary link"
-                          >
-                            View shop
-                          </Link>
-                        </li>
                       </ul>
                     </div>
                     <div className="infor-center">
                       <div className="product-info-price">
                         <h4 className="text-primary">
-                          ${product.price.toFixed(2)}
+                          ₹{product.price.toFixed(2)}
                         </h4>{" "}
                         {product.oldPrice && (
                           <span className="price-text text-main-2 old-price">
-                            ${product.oldPrice.toFixed(2)}
+                            ₹{product.oldPrice.toFixed(2)}
                           </span>
                         )}
                       </div>
@@ -147,22 +139,11 @@ export default function Details1({ product }) {
                   <div className="tf-product-info-choose-option sticky-top">
                     <div className="product-delivery">
                       <p className="price-text fw-medium text-primary">
-                        ${product.price.toFixed(2)}
+                        ₹{product.price.toFixed(2)}
                       </p>
                       <p>
                         <i className="icon-delivery-2" /> Free shipping
                       </p>
-                      <div className="shipping-to">
-                        <p className="body-md-2">Shipping to:</p>
-                        <div className="tf-cur">
-                          <div className="tf-cur-item">
-                            <select className="select-default cs-pointer fw-semibold body-md-2">
-                              <option>Metro Manila</option>
-                              <option>Metro Manila</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     <div className="product-quantity">
                       <p className="title body-text-3">Quantity</p>

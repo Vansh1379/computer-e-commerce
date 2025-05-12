@@ -6,6 +6,8 @@ import SearchForm from "./SearchForm";
 import LanguageSelect from "../common/LanguageSelect";
 import CurrencySelect from "../common/CurrencySelect";
 import NavCategories from "./NavCategories";
+import logo from "../../public/images/logo.png";
+
 export default function Header4({ fullWidth = false }) {
   return (
     <header className="tf-header">
@@ -15,12 +17,7 @@ export default function Header4({ fullWidth = false }) {
             <div className=" col-lg-2 col-6 d-flex align-items-center">
               <div className="logo-site">
                 <Link href={`/`}>
-                  <Image
-                    alt="Logo"
-                    src="/images/logo/logo.svg"
-                    width={185}
-                    height={41}
-                  />
+                  <Image alt="Logo" src={logo} width={185} height={41} />
                 </Link>
               </div>
             </div>
@@ -150,27 +147,6 @@ export default function Header4({ fullWidth = false }) {
                     <Nav />
                   </ul>
                 </nav>
-              </div>
-            </div>
-            <div className="col-xxl-3 col-4 d-flex align-items-center justify-content-end">
-              <div className="header-bt-right">
-                <div className="tf-cur bar-lang type-2">
-                  <div className="tf-cur-item gap-0">
-                    <i className="icon icon-budget" />
-                    <div className="tf-curs">
-                      <CurrencySelect topStart />
-                    </div>
-                  </div>
-                  <div className="tf-cur-item">
-                    <i className="icon icon-global gap-0" />
-                    <div className="tf-lans">
-                      <LanguageSelect
-                        topStart
-                        parentClassName="image-select center style-default type-lan"
-                      />
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

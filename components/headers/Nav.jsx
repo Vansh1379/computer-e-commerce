@@ -10,6 +10,7 @@ import {
   shopPages,
 } from "@/data/menu";
 import { usePathname } from "next/navigation";
+
 export default function Nav() {
   const pathname = usePathname();
   const isMenuActive = (link) => {
@@ -63,12 +64,6 @@ export default function Nav() {
                 </li>
               ))}
             </ul>
-            {/* <div class="view-all-demo text-center">
-                                <a href="#modalDemo" data-bs-toggle="modal"
-                                    class="tf-btn d-inline-flex">
-                                    <span class="text-white">View All Demos</span>
-                                </a>
-                            </div> */}
           </div>
         </div>
       </li>
@@ -180,6 +175,9 @@ export default function Nav() {
           </ul>
         </div>
       </li>
+      <a href="#" className="item-link body-md-2 fw-semibold ">
+        <span className="--bs-gray-700">Build Your PC</span>
+      </a>
     </>
   );
 }
