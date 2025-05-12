@@ -2,6 +2,9 @@
 import Context from "@/context/Context";
 import "../public/scss/main.scss";
 import "photoswipe/dist/photoswipe.css";
+// Import the Tailwind directives here - ensure they come after other CSS imports
+// so Tailwind classes can override Bootstrap when needed
+import "./global.css";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Cart from "@/components/modals/Cart";
@@ -22,7 +25,7 @@ export default function RootLayout({ children }) {
     if (typeof window !== "undefined") {
       // Import the script only on the client side
       import("bootstrap/dist/js/bootstrap.esm").then(() => {
-        // Module is imported, you can access any exported functionality if
+        // Module is imported, you can access any exported functionality if needed
       });
     }
   }, []);
@@ -77,7 +80,7 @@ export default function RootLayout({ children }) {
       window.removeEventListener("scroll", handleScroll);
       clearInterval(scrollInterval);
     };
-  }, [pathname]); // Empty dependency array means this runs once on mount
+  }, [pathname]); // Re-run when pathname changes
 
   useEffect(() => {
     // Close any open modal
@@ -99,6 +102,7 @@ export default function RootLayout({ children }) {
       }
     });
   }, [pathname]); // Runs every time the route changes
+
   useEffect(() => {
     const WOW = require("@/utlis/wow");
     const wow = new WOW.default({
@@ -107,8 +111,9 @@ export default function RootLayout({ children }) {
     });
     wow.init();
   }, [pathname]);
+
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       {/* Google Fonts - Inter & Poppins */}
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
