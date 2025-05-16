@@ -16,7 +16,7 @@ export default function NewsLetter() {
       );
 
       // Show the modal after a delay using a promise
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       myModal.show();
 
       modalElement.current.addEventListener("hidden.bs.modal", () => {

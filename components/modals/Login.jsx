@@ -49,12 +49,6 @@ export default function Login() {
             <ul className="list-log">
               <li>
                 <a href="#" className="tf-btn btn-line w-100">
-                  <i className="icon icon-facebook-2" />
-                  <span className="body-md-2 fw-semibold">Facebook</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="tf-btn btn-line w-100">
                   <i className="icon icon-google" />
                   <span className="body-md-2 fw-semibold">Google</span>
                 </a>

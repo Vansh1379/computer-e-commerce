@@ -1,17 +1,13 @@
+import Banner2 from "@/components/common/Banner2";
+import Features from "@/components/common/Features";
 import Footer1 from "@/components/footers/Footer1";
 import Header1 from "@/components/headers/Header1";
 import Topbar1 from "@/components/headers/Topbar1";
-import Banner from "@/components/homes/home-1/Banner";
-import Banner2 from "@/components/common/Banner2";
-import Collections from "@/components/homes/home-1/Collections";
-import Features from "@/components/common/Features";
-import Hero from "@/components/homes/home-1/Hero";
-import Product2 from "@/components/common/Product3";
-import Products1 from "@/components/homes/home-1/Products1";
-import Products3 from "@/components/homes/home-1/Products3";
-import Products4 from "@/components/homes/home-1/Products4";
-import Products5 from "@/components/common/Products";
-import Products6 from "@/components/common/RecentProducts";
+import Hero from "@/components/homes/home-3/Hero";
+import Products1 from "@/components/homes/home-3/Products1";
+import Products2 from "@/components/homes/home-3/Products2";
+import Products5 from "@/components/homes/home-3/Products5";
+import Products6 from "@/components/homes/home-3/Products6";
 
 export const metadata = {
   title: "Home || Onsus - Multipurpose React Nextjs eCommerce",
@@ -20,19 +16,16 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <Topbar1 />
+      <Topbar1 parentClass="tf-topbar" />
       <Header1 />
       <Hero />
-      <Features />
       <Products1 />
-      <Product2 />
-      <Products3 />
-      <Collections />
-      <Products4 />
-      <Banner />
-      <Products5 />
+      <Banner2 />
+      <Products2 />
       <Banner2 />
       <Products6 />
+      <Products5 />
+      <Features />
       <Footer1 />
     </>
   );
