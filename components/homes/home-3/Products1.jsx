@@ -13,7 +13,7 @@ export default function Products1() {
       <div className="container">
         <div className="section-wrap wow fadeInUp" data-wow-delay="0s">
           <div className="flat-title">
-            <h5 className="fw-semibold text-primary flat-title-has-icon">
+            <h5 className="fw-semibold text-light-blue flat-title-has-icon">
               <span className="icon">
                 <i className="icon-fire tf-ani-tada" />
               </span>

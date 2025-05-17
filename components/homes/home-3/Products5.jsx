@@ -15,7 +15,7 @@ export default function Products5() {
       <div className="relative z-5">
         <div className="container">
           <div className="flat-title mb-20 wow fadeInUp" data-wow-delay="0s">
-            <h5 className="fw-semibold">Hot Product</h5>
+            <h5 className="fw-semibold text-light-blue">Hot Product</h5>
           </div>
           <div
             className="grid-cls grid-cls-v2 wow fadeInUp"

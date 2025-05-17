@@ -14,7 +14,7 @@ export default function Products2() {
     <section className="tf-sp-2">
       <div className="container">
         <div className="flat-title wow fadeInUp" data-wow-delay="0s">
-          <h5 className="fw-semibold">Trending Products</h5>
+          <h5 className="fw-semibold text-light-blue">Trending Products</h5>
           <div className="box-btn-slide relative">
             <div className="swiper-button-prev nav-swiper nav-prev-products snbp36">
               <i className="icon-arrow-left-lg" />

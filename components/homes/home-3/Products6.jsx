@@ -14,7 +14,7 @@ export default function Products6() {
     <section className="tf-sp-2">
       <div className="container">
         <div className="flat-title wow fadeInUp" data-wow-delay="0s">
-          <h5 className="fw-semibold">Smart Home Appliances</h5>
+          <h5 className="fw-semibold text-light-blue">Smart Home Appliances</h5>
           <div className="box-btn-slide relative">
             <div className="swiper-button-prev nav-swiper nav-prev-products snbp38">
               <i className="icon-arrow-left-lg" />

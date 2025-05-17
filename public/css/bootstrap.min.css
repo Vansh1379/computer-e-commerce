@@ -8280,7 +8280,7 @@ fieldset:disabled .btn {
 }
 .text-light-blue {
   --bs-text-opacity: 1;
-  --bs-light-blue-rgb: 100, 160, 220; /* Darker and richer light blue */
+  --bs-light-blue-rgb: 49, 52, 123; /* Updated to match #31347b */
   color: rgba(var(--bs-light-blue-rgb), var(--bs-text-opacity)) !important;
 }
 

@@ -33,7 +33,7 @@ export default function Login() {
                 <a
                   href="#register"
                   data-bs-toggle="modal"
-                  className="text-primary"
+                  className="text-light-blue"
                 >
                   Register
                 </a>
