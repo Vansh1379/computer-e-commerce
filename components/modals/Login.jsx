@@ -14,10 +14,7 @@ export default function Login() {
             <form action="#" className="form-log">
               <div className="form-content">
                 <fieldset>
-                  <label className="fw-semibold body-md-2">
-                    {" "}
-                    Phone number *{" "}
-                  </label>
+                  <label className="fw-semibold body-md-2"> Email * </label>
                   <input type="text" placeholder="Your email" />
                 </fieldset>
                 <fieldset>
