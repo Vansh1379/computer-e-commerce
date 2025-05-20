@@ -10,7 +10,6 @@ import Categories from "@/components/homes/home-4/Categories";
 import Hero from "@/components/homes/home-4/Hero";
 import Products from "@/components/homes/home-4/Products";
 import Product2 from "@/components/homes/home-4/Products2";
-import Products4 from "@/components/homes/home-4/Products4";
 import React from "react";
 
 export const metadata = {
@@ -28,7 +27,7 @@ export default function page() {
       <Product3 />
       <BrandsSlider typeClass="type-sp-2" fullWidth />
       <Product2 />
-      <Products4 />
+
       <Banner />
       <Products2 parentClass="tf-sp-2" />
       <RecentProducts parentClass="tf-sp-2 pt-0" />

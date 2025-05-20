@@ -1,5 +1,3 @@
-import BrandsSlider from "@/components/common/BrandsSlider";
-import RecentProducts from "@/components/common/RecentProducts";
 import Footer1 from "@/components/footers/Footer1";
 import Header4 from "@/components/headers/Header4";
 import Description from "@/components/product-detail/Description";
@@ -52,7 +50,6 @@ export default async function ProductDetailPage({ params }) {
       <Description />
       <SimilerProducts />
       <Relatedproducts />
-      <BrandsSlider />
       <Footer1 />
     </>
   );

@@ -170,15 +170,6 @@ export default function Details1({ product }) {
                         </button>
                       </div>
                     </div>
-                    <div className="product-color">
-                      <p className="title body-text-3">Color</p>
-                      <div className="tf-select-color">
-                        <select className="select-color">
-                          <option>Graphite Black</option>
-                          <option>Graphite Blue</option>
-                        </select>
-                      </div>
-                    </div>
                     <div className="product-box-btn">
                       <a
                         href="#shoppingCart"

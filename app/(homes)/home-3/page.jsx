@@ -7,7 +7,7 @@ import Products2 from "@/components/homes/home-3/Products2";
 import Products3 from "@/components/common/Product4";
 import Products4 from "@/components/homes/home-3/Products4";
 import Products5 from "@/components/homes/home-3/Products5";
-import Products6 from "@/components/homes/home-3/Products6";
+import Products6 from "@/components/homes/home-3/LeftSideBannerProduct";
 import React from "react";
 import Products from "@/components/common/Products";
 import RecentProducts from "@/components/common/RecentProducts";
