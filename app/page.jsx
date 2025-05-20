@@ -8,6 +8,7 @@ import Products1 from "@/components/homes/home-3/Products1";
 import Products from "@/components/homes/home-4/Products";
 import Products5 from "@/components/homes/home-3/Products5";
 import Products6 from "@/components/homes/home-3/LeftSideBannerProduct";
+import Products7 from "@/components/homes/home-3/RightSideBannerProducts";
 
 export const metadata = {
   title: "Home || Onsus - Multipurpose React Nextjs eCommerce",
@@ -25,6 +26,7 @@ export default function Home() {
       <Banner2 />
       <Products6 />
       <Products5 />
+      <Products7 />
       <Features />
       <Footer1 />
     </>
