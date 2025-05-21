@@ -10,13 +10,6 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function BuildSummary(props) {
   const {
@@ -27,13 +20,18 @@ export default function BuildSummary(props) {
   } = props;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Build Summary</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex justify-between">
-          <span>Estimated Wattage:</span>
+    <div className="w-full rounded-2xl border border-muted bg-white shadow-sm  mt-3">
+      {/* Header */}
+      <div className="">
+        <h4 className="font-semibold text-foreground mt-3 ml-3">
+          Build Summary
+        </h4>
+      </div>
+
+      {/* Info Section */}
+      <div className="space-y-3">
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Estimated Wattage:</span>
           <span className="font-medium">{estimatedWattage}W</span>
         </div>
 
@@ -41,24 +39,27 @@ export default function BuildSummary(props) {
           <span>Total Price:</span>
           <span>₹{totalPrice.toLocaleString()}</span>
         </div>
+      </div>
 
-        {compatibilityIssues.length > 0 && (
-          <div className="mt-4 p-3 bg-destructive/10 rounded-md border border-destructive/20">
-            <h4 className="font-medium flex items-center gap-2 text-destructive mb-2">
-              <AlertCircle className="h-4 w-4" />
-              Compatibility Issues
-            </h4>
-            <ul className="list-disc pl-5 text-sm space-y-1">
-              {compatibilityIssues.map((issue, index) => (
-                <li key={index} className="text-muted-foreground">
-                  {issue}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="flex flex-col gap-3">
+      {/* Compatibility Issues */}
+      {compatibilityIssues.length > 0 && (
+        <div className="mt-4 p-3 bg-destructive/10 rounded-md border border-destructive/20">
+          <h4 className="font-medium flex items-center gap-2 text-destructive mb-2">
+            <AlertCircle className="h-4 w-4" />
+            Compatibility Issues
+          </h4>
+          <ul className="list-disc pl-5 text-sm space-y-1">
+            {compatibilityIssues.map((issue, index) => (
+              <li key={index} className="text-muted-foreground">
+                {issue}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Buttons Section */}
+      <div className="flex flex-col gap-4">
         <Button
           className="w-full"
           size="lg"
@@ -93,7 +94,7 @@ export default function BuildSummary(props) {
             <span className="sr-only">Print</span>
           </Button>
         </div>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

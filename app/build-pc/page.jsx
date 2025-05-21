@@ -342,7 +342,7 @@ export default function PCBuilder() {
         <Topbar1 />
         <Header1 />
         <div>
-          <h1 className="text-3xl font-bold mb-2">Custom PC Builder</h1>
+          <h1 className="text-xl font-bold mb-2">Custom PC Builder</h1>
           <p className="text-muted-foreground">
             Select components to build your custom PC. Our tool ensures
             compatibility and helps you create the perfect system for your
