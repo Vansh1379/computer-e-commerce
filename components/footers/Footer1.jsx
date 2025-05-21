@@ -154,7 +154,7 @@ export default function Footer1({ fullWidth = false }) {
                 </li>
                 <li className="footer-col-block">
                   <h6 className="ft-heading footer-heading-mobile fw-semibold">
-                    Popular categories
+                    About Us
                   </h6>
                   <div className="tf-collapse-content">
                     <ul className="ft-menu-list">

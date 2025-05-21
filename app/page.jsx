@@ -23,8 +23,8 @@ export default function Home() {
       <Products1 />
       <Banner2 />
       <Products />
-      <Banner2 />
       <Products6 />
+      <Banner2 />
       <Products5 />
       <Products7 />
       <Features />
