@@ -10,6 +10,8 @@ import {
   ComponentCategories,
 } from "@/components/build-pc/componentCategories.jsx";
 import { sampleComponents } from "@/data/sample-components.js";
+import Topbar1 from "@/components/headers/Topbar1";
+import Header1 from "@/components/headers/Header1";
 
 export default function PCBuilder() {
   const [activeCategory, setActiveCategory] = useState("cpu");
@@ -337,6 +339,8 @@ export default function PCBuilder() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col gap-6">
+        <Topbar1 />
+        <Header1 />
         <div>
           <h1 className="text-3xl font-bold mb-2">Custom PC Builder</h1>
           <p className="text-muted-foreground">
