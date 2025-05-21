@@ -237,38 +237,6 @@ export default function Products1() {
               <div className="tf-control-view flat-title-tab-product flex-wrap">
                 <LayoutHandler />
                 <ShowLength />
-                <div
-                  className="tf-dropdown-sort tf-sort type-sort-by"
-                  data-bs-toggle="dropdown"
-                >
-                  <div className="btn-select w-100">
-                    <i className="icon-sort" />
-                    <p className="body-text-3 w-100">
-                      Sort by:{" "}
-                      <span className="text-sort-value">{sortingOption}</span>
-                    </p>
-                    <i className="icon-arrow-down fs-10" />
-                  </div>
-                  <div className="dropdown-menu">
-                    {[
-                      "Default",
-                      "Title Ascending",
-                      "Title Descending",
-                      "Price Ascending",
-                      "Price Descending",
-                    ].map((elm, i) => (
-                      <div
-                        key={i}
-                        className={`select-item ${
-                          sortingOption == elm ? "active" : ""
-                        }`}
-                        onClick={() => allProps.setSortingOption(elm)}
-                      >
-                        <span className="text-value-item">{elm}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
 

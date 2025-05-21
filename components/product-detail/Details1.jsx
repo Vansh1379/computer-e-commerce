@@ -1,8 +1,12 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 import Slider1 from "./sliders/Slider1";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
+// Import the EMI image properly using Next.js Image component
+import EMI from "../../public/images/EMI.png";
+
 export default function Details1({ product }) {
   const [quantity, setQuantity] = useState(1);
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
@@ -102,7 +106,7 @@ export default function Details1({ product }) {
                       <ul className="product-about-list">
                         <li>
                           <p className="body-text-3">
-                            Here’s the quickest way to enjoy your delicious hot
+                            Here's the quickest way to enjoy your delicious hot
                             tea every single day.
                           </p>
                         </li>
@@ -144,6 +148,15 @@ export default function Details1({ product }) {
                       <p>
                         <i className="icon-delivery-2" /> Free shipping
                       </p>
+                    </div>
+                    <div className="emi-image-container">
+                      <Image
+                        src={EMI}
+                        alt="EMI Options"
+                        width={250}
+                        height={100}
+                        priority
+                      />
                     </div>
                     <div className="product-quantity">
                       <p className="title body-text-3">Quantity</p>
