@@ -233,6 +233,69 @@ h6 {
   line-height: 1.2;
   color: var(--bs-heading-color);
 }
+
+.build-pc-card {
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+}
+
+.build-pc-shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.build-pc-p-4 {
+  padding: 1.5rem;
+}
+
+.build-pc-gap-3 {
+  gap: 1rem;
+}
+
+.build-pc-font-medium {
+  font-weight: 500;
+}
+
+.build-pc-text-muted {
+  color: #6c757d;
+}
+
+.build-pc-text-sm {
+  font-size: 0.875rem;
+}
+
+.build-pc-badge {
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  border-radius: 0.2rem;
+}
+
+.build-pc-bg-primary {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.build-pc-border {
+  border: 1px solid #dee2e6;
+}
+
+.build-pc-text-secondary {
+  color: #6c757d;
+}
+
+.build-pc-progress {
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  height: 0.5rem;
+}
+
+.build-pc-progress-bar {
+  background-color: #0d6efd;
+  height: 100%;
+  transition: width 0.6s ease;
+}
+
 .h1,
 h1 {
   font-size: calc(1.375rem + 1.5vw);
@@ -838,6 +901,18 @@ progress {
 .col-12 {
   flex: 0 0 auto;
   width: 100%;
+}
+.margin-Home {
+  margin-left: 20px;
+}
+.margin-top {
+  margin-top: 10px;
+}
+.margin-right {
+  margin-right: 20px;
+}
+.margin-bottom {
+  margin-bottom: 20px;
 }
 .offset-1 {
   margin-left: 8.33333333%;

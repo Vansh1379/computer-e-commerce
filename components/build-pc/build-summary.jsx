@@ -23,13 +23,13 @@ export default function BuildSummary(props) {
     <div className="w-full rounded-2xl border border-muted bg-white shadow-sm  mt-3">
       {/* Header */}
       <div className="">
-        <h4 className="font-semibold text-foreground mt-3 ml-3">
+        <h4 className="font-semibold text-foreground mt-3 margin-Home">
           Build Summary
         </h4>
       </div>
 
       {/* Info Section */}
-      <div className="space-y-3">
+      <div className="space-y-3 margin-Home margin-right">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Estimated Wattage:</span>
           <span className="font-medium">{estimatedWattage}W</span>
