@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import NavCategories from "./NavCategories";
 import { blogMenuItems, shopDetailsPages, shopPages } from "@/data/menu";
 import { usePathname } from "next/navigation";
 
@@ -19,7 +20,8 @@ export default function Nav() {
   return (
     <>
       <a href="#" className="item-link link body-md-2 fw-semibold">
-        <span>Home</span>
+        <NavCategories styleClass="" />
+        <span className="margin-Home">Home</span>
       </a>
 
       <li
