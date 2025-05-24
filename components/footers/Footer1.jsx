@@ -120,40 +120,6 @@ export default function Footer1({ fullWidth = false }) {
               <ul className="ft-link-wrap w-100 tf-grid-layout md-col-2 lg-col-4">
                 <li className="footer-col-block">
                   <h6 className="ft-heading footer-heading-mobile fw-semibold">
-                    Get help
-                  </h6>
-                  <div className="tf-collapse-content">
-                    <ul className="ft-menu-list">
-                      <li>
-                        <Link href={`/privacy`} className="link">
-                          Delivery Information
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/faq`} className="link">
-                          Sale Terms &amp; Conditions
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/privacy`} className="link">
-                          Returns &amp; Refunds
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/privacy`} className="link">
-                          Privacy Notice
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/faq`} className="link">
-                          Shopping FAQs
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li className="footer-col-block">
-                  <h6 className="ft-heading footer-heading-mobile fw-semibold">
                     About Us
                   </h6>
                   <div className="tf-collapse-content">
@@ -191,6 +157,40 @@ export default function Footer1({ fullWidth = false }) {
                       <li>
                         <Link href={`/shop-default`} className="link">
                           Waterproof Headphones
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li className="footer-col-block">
+                  <h6 className="ft-heading footer-heading-mobile fw-semibold">
+                    Get Help
+                  </h6>
+                  <div className="tf-collapse-content">
+                    <ul className="ft-menu-list">
+                      <li>
+                        <Link href={`/privacy`} className="link">
+                          Delivery Information
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/faq`} className="link">
+                          Sale Terms &amp; Conditions
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/privacy`} className="link">
+                          Returns &amp; Refunds
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/privacy`} className="link">
+                          Privacy Notice
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/faq`} className="link">
+                          Shopping FAQs
                         </Link>
                       </li>
                     </ul>
@@ -373,7 +373,7 @@ export default function Footer1({ fullWidth = false }) {
                     href={`/blog-grid`}
                     className="title-sidebar link fw-bold"
                   >
-                    New arrivals
+                    Brand Store
                   </Link>
                 </li>
                 <li>
@@ -381,7 +381,7 @@ export default function Footer1({ fullWidth = false }) {
                     href={`/blog-grid`}
                     className="title-sidebar link fw-bold"
                   >
-                    Best sale
+                    Gaming Console
                   </Link>
                 </li>
                 <li>
@@ -389,7 +389,7 @@ export default function Footer1({ fullWidth = false }) {
                     href={`/blog-grid`}
                     className="title-sidebar link fw-bold"
                   >
-                    Value of the day
+                    New Arrival
                   </Link>
                 </li>
                 <li>
@@ -397,7 +397,7 @@ export default function Footer1({ fullWidth = false }) {
                     href={`/blog-grid`}
                     className="title-sidebar link fw-bold"
                   >
-                    Top 100 offers
+                    Build Your PC
                   </Link>
                 </li>
                 <li>
@@ -418,8 +418,8 @@ export default function Footer1({ fullWidth = false }) {
                 </li>
               </ul>
               <p className="nocopy caption text-center">
-                <span className="fw-medium">Onsus.</span>© 2025. All right
-                reserved - Designed by ThemesFlat
+                <span className="fw-medium">UniqInfoTech.</span>© 2025. All
+                right reserved - Designed by RightInfoSrevice
               </p>
             </div>
           </div>
