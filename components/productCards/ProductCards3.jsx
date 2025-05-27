@@ -10,8 +10,6 @@ export default function ProductCards3({ product }) {
   const {
     addToWishlist,
     isAddedtoWishlist,
-    addToCompareItem,
-    isAddedtoCompareItem,
 
     addProductToCart,
     isAddedToCartProducts,
@@ -46,17 +44,17 @@ export default function ProductCards3({ product }) {
             <AddToWishlist productId={product.id} tooltipClass="tooltip-left" />
           </li>
         </ul>
-        {product.hotSale && (
+        {/* {product.hotSale && (
           <div className="box-sale-wrap pst-default">
             <p className="small-text">Sale</p>
-            <p className="title-sidebar-2">70%</p>
+            <p className="title-sidebar-2">7000000ejbefebfebj%</p>
           </div>
-        )}
+        )} */}
       </div>
       <div className="card-product-info">
         <div className="box-title">
           <div>
-            <p className="product-tag caption text-main-2 d-none">Headphone</p>
+            {/* <p className="product-tag caption text-main-2 d-none">Headphone</p> */}
             <Link
               href={`/product-detail/${product.id}`}
               className="name-product body-md-2 fw-semibold text-secondary link"

@@ -202,7 +202,7 @@ export const products3 = [
     category: "Laptop & Computer",
     title: 'HP Pavilion 14-dv0598sa 14" Full HD Intel Core i3-1115G4',
     price: 32.75,
-
+    oldPrice: 84.5,
     filterBrands: ["Corsair", "JBL", "Logitech G", "Logitech", "HyperX"],
     rating: 4.2,
   },

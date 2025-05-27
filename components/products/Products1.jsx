@@ -185,6 +185,7 @@ export default function Products1() {
       });
     };
   }, []); // Empty dependency array means this runs once on mount
+
   return (
     <div className="flat-content">
       <div className="container">
@@ -238,8 +239,9 @@ export default function Products1() {
                 <LayoutHandler />
                 <ShowLength />
               </div>
-            </div>
-
+            </div>{" "}
+            {/* this is the filter option which comes above the product listed
+            and comes when he filter option is selected */}
             {price[0] != 0 ||
             price[1] != 100 ||
             isNew != "All" ||
@@ -321,12 +323,14 @@ export default function Products1() {
             ) : (
               ""
             )}
-
             <div className="gridLayout-wrapper">
               <div
                 className="tf-grid-layout lg-col-4 md-col-3 sm-col-2 flat-grid-product wrapper-shop layout-tabgrid-1"
                 id="gridLayout"
               >
+                {/*the main file which renders the products it takes data from product.js 
+                data set and then goes to reducer by redux and comes by the name of sorted
+                 from redux to this file and then gets render*/}
                 {sorted.map((product, i) => (
                   <ProductCards3 key={i} product={product} />
                 ))}
