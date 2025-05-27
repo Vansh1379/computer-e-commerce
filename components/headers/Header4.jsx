@@ -3,8 +3,6 @@ import Nav from "./Nav";
 import Link from "next/link";
 import Image from "next/image";
 import SearchForm from "./SearchForm";
-import LanguageSelect from "../common/LanguageSelect";
-import CurrencySelect from "../common/CurrencySelect";
 import NavCategories from "./NavCategories";
 import logo from "../../public/images/logo.png";
 

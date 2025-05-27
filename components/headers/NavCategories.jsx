@@ -37,7 +37,7 @@ export default function NavCategories({ styleClass = "" }) {
             <li className="menu-item">
               <a href="#">
                 <i className="icon-clothing fs-20" />
-                <span>Apparel</span>
+                <span>Home</span>
               </a>
             </li>
             <li className="menu-item">
@@ -137,55 +137,31 @@ export default function NavCategories({ styleClass = "" }) {
                     </defs>
                   </svg>
                 </span>
-                <span>Automotive parts</span>
+                <span>Brand Store</span>
               </a>
             </li>
             <li className="menu-item">
               <a href="#">
                 <i className="icon-beauti fs-20" />
-                <span>Beauty &amp; personal care</span>
+                <span>Refurbish System</span>
               </a>
             </li>
             <li className="menu-item">
               <a href="#">
                 <i className="icon-computer fs-20" />
-                <span>Consumer Electronics</span>
+                <span>New Arrival</span>
               </a>
             </li>
             <li className="menu-item">
               <a href="#">
                 <i className="icon-sofa fs-20" />
-                <span>Furniture</span>
+                <span>Build Your PC</span>
               </a>
             </li>
             <li className="menu-item">
               <a href="#">
                 <i className="icon-computer-wifi fs-20" />
-                <span>Home products</span>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="#">
-                <i className="icon-machine fs-20" />
-                <span>Machinery</span>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="#">
-                <i className="icon-jewelry fs-20" />
-                <span>Timepieces, jewelry &amp; eyewear</span>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="#">
-                <i className="icon-tool fs-20" />
-                <span>Tool &amp; hardware</span>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="#">
-                <i className="icon-best-seller fs-20" />
-                <span>Bestseller</span>
+                <span>Offers</span>
               </a>
             </li>
           </ul>

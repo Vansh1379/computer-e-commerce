@@ -408,14 +408,6 @@ export default function Footer1({ fullWidth = false }) {
                     Blog
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href={`/blog-grid`}
-                    className="title-sidebar link fw-bold"
-                  >
-                    <i className="icon-fire" /> 50% OFF
-                  </Link>
-                </li>
               </ul>
               <p className="nocopy caption text-center">
                 <span className="fw-medium">UniqInfoTech.</span>© 2025. All

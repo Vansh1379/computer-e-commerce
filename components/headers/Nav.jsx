@@ -12,7 +12,7 @@ export default function Nav() {
   };
   const isMenuParentActive = (menu) => {
     return menu.some((elm) => isMenuActive(elm));
-  };
+  }; 
   const isMenuParentActive2 = (menu) => {
     return menu.some((elm) => isMenuParentActive(elm.items));
   };

@@ -9,6 +9,7 @@ import AddToCart from "@/components/common/AddToCart";
 import AddToWishlist from "@/components/common/AddToWishlist";
 import AddToQuickview from "@/components/common/AddToQuickview";
 import AddToCompare from "@/components/common/AddToCompare";
+
 export default function Products6() {
   return (
     <section className="tf-sp-2">

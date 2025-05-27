@@ -4,7 +4,6 @@ import Image from "next/image";
 import Slider1 from "./sliders/Slider1";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
-// Import the EMI image properly using Next.js Image component
 import EMI from "../../public/images/EMI.png";
 
 export default function Details1({ product }) {
