@@ -9,20 +9,18 @@ import AddToWishlist from "../common/AddToWishlist";
 export default function ProductCards3({ product }) {
   const {
     addToWishlist,
-    isAddedtoWishlist,
-
-    addProductToCart,
-    isAddedToCartProducts,
+    // isAddedtoWishlist,
+    // addProductToCart,
+    // isAddedToCartProducts,
   } = useContextElement();
 
   return (
-    <div className="card-product">
+    <div className="card-product mb-4">
       <div className="card-product-wrapper">
         <Link href={`/product-detail/${product.id}`} className="product-img">
           <Image
             className="img-product ls-is-cached lazyloaded"
             src={product.imgSrc}
-            data-=""
             alt="image-product"
             width={500}
             height={500}
@@ -30,7 +28,6 @@ export default function ProductCards3({ product }) {
           <Image
             className="img-hover ls-is-cached lazyloaded"
             src={product.imgHover}
-            data-=""
             alt="image-product"
             width={500}
             height={500}
@@ -44,17 +41,11 @@ export default function ProductCards3({ product }) {
             <AddToWishlist productId={product.id} tooltipClass="tooltip-left" />
           </li>
         </ul>
-        {/* {product.hotSale && (
-          <div className="box-sale-wrap pst-default">
-            <p className="small-text">Sale</p>
-            <p className="title-sidebar-2">7000000ejbefebfebj%</p>
-          </div>
-        )} */}
       </div>
+
       <div className="card-product-info">
         <div className="box-title">
           <div>
-            {/* <p className="product-tag caption text-main-2 d-none">Headphone</p> */}
             <Link
               href={`/product-detail/${product.id}`}
               className="name-product body-md-2 fw-semibold text-secondary link"
@@ -64,11 +55,11 @@ export default function ProductCards3({ product }) {
           </div>
           <p className="price-wrap fw-medium">
             <span className="new-price price-text fw-medium">
-              ${product.price.toFixed(3)}
+              ₹{product.price.toFixed(3)}
             </span>
             {product.oldPrice && (
               <span className="old-price body-md-2 text-main-2">
-                ${product.oldPrice.toFixed(3)}
+                ₹{product.oldPrice.toFixed(3)}
               </span>
             )}
           </p>
@@ -95,6 +86,11 @@ export default function ProductCards3({ product }) {
             <p className="caption text-main-2">(74)</p>
           </div>
         </div>
+      </div>
+
+      {/* ✅ Bootstrap Add to Cart Button (no logic yet) */}
+      <div className="">
+        <button className="btn btn-primary">Add to Cart</button>
       </div>
     </div>
   );
