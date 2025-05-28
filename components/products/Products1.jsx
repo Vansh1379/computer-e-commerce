@@ -8,6 +8,117 @@ import { initialState, reducer } from "@/reducer/filterReducer";
 import LayoutHandler from "./LayoutHandler";
 import ProductCards3 from "../productCards/ProductCards3";
 
+// Banner Component
+const ProductBanner = () => {
+  return (
+    <div className="product-banner mb-4">
+      <div className="banner-container position-relative overflow-hidden rounded">
+        <div className="row align-items-center min-vh-50">
+          <div className="col-lg-6 col-md-6">
+            <div className="banner-content p-4 p-lg-5">
+              <div className="banner-text">
+                <h2 className="banner-title fw-bold mb-3 text-dark">
+                  Power Up Your <br />
+                  <span className="text-primary">Productivity</span>
+                </h2>
+                <p className="banner-description text-muted mb-4">
+                  Discover the Ultimate Acer Laptop Adapter for Seamless
+                  Charging and Uninterrupted Performance
+                </p>
+                <div className="acer-logo">
+                  <svg
+                    width="120"
+                    height="40"
+                    viewBox="0 0 120 40"
+                    className="text-success"
+                  >
+                    <text
+                      x="10"
+                      y="25"
+                      fontSize="24"
+                      fontWeight="bold"
+                      fill="currentColor"
+                    >
+                      acer
+                    </text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6">
+            <div className="banner-image p-3">
+              <img
+                src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                alt="Acer Laptop"
+                className="img-fluid rounded shadow-sm"
+                style={{ maxHeight: "300px", objectFit: "cover" }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .product-banner {
+          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+          border: 1px solid #dee2e6;
+        }
+
+        .banner-container {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(248, 249, 250, 0.9) 100%
+          );
+        }
+
+        .banner-title {
+          font-size: 2.5rem;
+          line-height: 1.2;
+        }
+
+        .banner-description {
+          font-size: 1.1rem;
+          line-height: 1.6;
+        }
+
+        .min-vh-50 {
+          min-height: 300px;
+        }
+
+        .acer-logo {
+          opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+          .banner-title {
+            font-size: 2rem;
+          }
+
+          .banner-description {
+            font-size: 1rem;
+          }
+
+          .min-vh-50 {
+            min-height: 250px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .banner-title {
+            font-size: 1.75rem;
+          }
+
+          .banner-content {
+            text-align: center;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
 export default function Products1() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
@@ -94,7 +205,7 @@ export default function Products1() {
         const filteredBydeails = [...products3].filter((elm) => elm.oldPrice);
         filteredArrays = [...filteredArrays, filteredBydeails];
       }
-      if (deals == "Today’s Deals") {
+      if (deals == "Today's Deals") {
         const filteredBydeails = [...products3].filter(
           (elm) => elm.isTodaysDeals
         );
@@ -211,6 +322,8 @@ export default function Products1() {
             </div>
           </div>
           <div className="content-area">
+            {/* Banner Component Added Here */}
+            <ProductBanner />
             <div className="tf-shop-control flex-wrap gap-10">
               <div className="d-flex align-items-center gap-10">
                 <button
