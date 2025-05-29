@@ -10,9 +10,6 @@ const productImages = [
   { src: "/images/product/product-detail-1.jpg", color: "gray" },
   { src: "/images/product/product-detail-2.jpg", color: "gray" },
   { src: "/images/product/product-detail-3.jpg", color: "gray" },
-  { src: "/images/product/product-detail-4.jpg", color: "gray" },
-  { src: "/images/product/product-detail-5.jpg", color: "beige" },
-  { src: "/images/product/product-detail-6.jpg", color: "beige" },
 ];
 
 export default function Slider1({ firstIamge = productImages[0].src }) {

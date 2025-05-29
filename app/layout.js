@@ -12,12 +12,10 @@ import Login from "@/components/modals/Login";
 import Register from "@/components/modals/Register";
 import ScrollTop from "@/components/common/ScrollTop";
 import Quickview from "@/components/modals/Quickview";
-import Compare from "@/components/modals/Compare";
 import MobileMenu from "@/components/modals/MobileMenu";
 import Toolbar from "@/components/modals/Toolbar";
 import Search from "@/components/modals/Search";
 import AddParallax from "@/utlis/AddParallax";
-import NewsLetter from "@/components/modals/NewsLetter";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -140,12 +138,10 @@ export default function RootLayout({ children }) {
             <Register />
             <Cart />
             <Quickview />
-            <Compare />
             <MobileMenu />
             <ScrollTop />
             <Toolbar />
             <Search />
-            <NewsLetter />
             <AddParallax />
           </Context>
         </div>
