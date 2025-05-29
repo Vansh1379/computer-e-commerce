@@ -13,6 +13,7 @@ export default function ProductCards3({ product }) {
     // addProductToCart,
     // isAddedToCartProducts,
   } = useContextElement();
+  const { addProductToCart, isAddedToCartProducts } = useContextElement();
 
   return (
     <div className="card-product mb-4">
@@ -89,9 +90,15 @@ export default function ProductCards3({ product }) {
       </div>
 
       {/* ✅ Bootstrap Add to Cart Button (no logic yet) */}
-      <div className="">
-        <button className="btn btn-primary">Add to Cart</button>
-      </div>
+      <a
+        href="#shoppingCart"
+        data-bs-toggle="offcanvas"
+        className="tf-btn text-white"
+        onClick={() => addProductToCart(product.id, quantity)}
+      >
+        {isAddedToCartProducts(product.id) ? "Already Added" : "Add to cart"}
+        <i className="icon-cart-2" />
+      </a>
     </div>
   );
 }

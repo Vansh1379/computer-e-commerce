@@ -350,7 +350,6 @@ export default function Products1() {
               </div>
               <div className="tf-control-view flat-title-tab-product flex-wrap">
                 <LayoutHandler />
-                <ShowLength />
               </div>
             </div>{" "}
             {/* this is the filter option which comes above the product listed
