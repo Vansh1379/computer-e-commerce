@@ -68,28 +68,11 @@ export default function MobileMenu() {
                 role="tabpanel"
               >
                 <div className="mb-content-top">
-                  <form action="#" className="form-search">
-                    <fieldset>
-                      <input
-                        className=""
-                        type="text"
-                        placeholder="Search for anything"
-                        name="text"
-                        tabIndex={2}
-                        defaultValue=""
-                        aria-required="true"
-                        required=""
-                      />
-                    </fieldset>
-                    <button type="submit" className="button-submit">
-                      <i className="icon-search" />
-                    </button>
-                  </form>
+
                   <ul className="nav-ul-mb" id="wrapper-menu-navigation">
                     <li
-                      className={`nav-mb-item  ${
-                        isMenuParentActive(demoItems) ? "active" : ""
-                      } `}
+                      className={`nav-mb-item  ${isMenuParentActive(demoItems) ? "active" : ""
+                        } `}
                     >
                       <a
                         href="#dropdown-menu-home"
@@ -107,9 +90,8 @@ export default function MobileMenu() {
                             <li key={i}>
                               <Link
                                 href={item.href}
-                                className={`sub-nav-link ${
-                                  isMenuActive(item) ? "active" : ""
-                                }`}
+                                className={`sub-nav-link ${isMenuActive(item) ? "active" : ""
+                                  }`}
                               >
                                 {item.name}
                               </Link>
@@ -119,9 +101,8 @@ export default function MobileMenu() {
                       </div>
                     </li>
                     <li
-                      className={`nav-mb-item  ${
-                        isMenuParentActive2(shopPages) ? "active" : ""
-                      } `}
+                      className={`nav-mb-item  ${isMenuParentActive2(shopPages) ? "active" : ""
+                        } `}
                     >
                       <a
                         href="#dropdown-menu-shop"
@@ -153,9 +134,8 @@ export default function MobileMenu() {
                                     <li key={i}>
                                       <Link
                                         href={item.href}
-                                        className={`sub-nav-link body-md-2 ${
-                                          isMenuActive(item) ? "active" : ""
-                                        }`}
+                                        className={`sub-nav-link body-md-2 ${isMenuActive(item) ? "active" : ""
+                                          }`}
                                       >
                                         <span>{item.text}</span>
                                       </Link>
@@ -169,9 +149,8 @@ export default function MobileMenu() {
                       </div>
                     </li>
                     <li
-                      className={`nav-mb-item  ${
-                        isMenuParentActive2(shopDetailsPages) ? "active" : ""
-                      } `}
+                      className={`nav-mb-item  ${isMenuParentActive2(shopDetailsPages) ? "active" : ""
+                        } `}
                     >
                       <a
                         href="#dropdown-menu-product"
@@ -206,9 +185,8 @@ export default function MobileMenu() {
                                     <li key={i}>
                                       <Link
                                         href={item.href}
-                                        className={`sub-nav-link body-md-2 ${
-                                          isMenuActive(item) ? "active" : ""
-                                        }`}
+                                        className={`sub-nav-link body-md-2 ${isMenuActive(item) ? "active" : ""
+                                          }`}
                                       >
                                         <span>{item.text}</span>
                                       </Link>
@@ -222,9 +200,8 @@ export default function MobileMenu() {
                       </div>
                     </li>
                     <li
-                      className={`nav-mb-item  ${
-                        isMenuParentActive(blogMenuItems) ? "active" : ""
-                      } `}
+                      className={`nav-mb-item  ${isMenuParentActive(blogMenuItems) ? "active" : ""
+                        } `}
                     >
                       <a
                         href="#dropdown-menu-blog"
@@ -242,9 +219,8 @@ export default function MobileMenu() {
                             <li key={i}>
                               <Link
                                 href={item.href}
-                                className={`sub-nav-link ${
-                                  isMenuActive(item) ? "active" : ""
-                                }`}
+                                className={`sub-nav-link ${isMenuActive(item) ? "active" : ""
+                                  }`}
                               >
                                 {item.text}
                               </Link>
@@ -254,9 +230,8 @@ export default function MobileMenu() {
                       </div>
                     </li>
                     <li
-                      className={`nav-mb-item  ${
-                        isMenuParentActive(othersPages) ? "active" : ""
-                      } `}
+                      className={`nav-mb-item  ${isMenuParentActive(othersPages) ? "active" : ""
+                        } `}
                     >
                       <a
                         href="#dropdown-menu-page"
@@ -274,9 +249,8 @@ export default function MobileMenu() {
                             <li key={i}>
                               <Link
                                 href={item.href}
-                                className={`sub-nav-link body-md-2 ${
-                                  isMenuActive(item) ? "active" : ""
-                                }`}
+                                className={`sub-nav-link body-md-2 ${isMenuActive(item) ? "active" : ""
+                                  }`}
                               >
                                 <span>{item.text}</span>
                               </Link>

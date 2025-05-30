@@ -24,28 +24,17 @@ export default function Hero({ leftBanners = [], rightTwoBanners = [], rightThre
   };
 
   return (
-    <section className="py-5 position-relative min-vh-75" style={{ minHeight: '70vh' }}>
-      {/* Background Image */}
-      <div className="position-absolute top-0 start-0 w-100 h-100 overflow-hidden">
-        <Image
-          src={bannerBg}
-          alt="Hero Background"
-          fill
-          className="object-cover"
-          priority
-          quality={85}
-        />
-      </div>
+    <section className="py-5" style={{ minHeight: '100vh' }}>
 
       <div className="container-fluid px-4 position-relative" style={{ zIndex: 1 }}>
         <div className="row g-4 h-100">
           {/* Left Banner - 8 columns */}
-          <div className="col-12 col-lg-8">
+          <div className="col-12 col-lg-9">
             <Link
               href={`/category/${leftBanner?.category?.slug || 'processors'}`}
               className="d-block h-100 position-relative overflow-hidden rounded-4 shadow-lg text-decoration-none"
               style={{
-                minHeight: '400px',
+                minHeight: '450px',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
@@ -62,7 +51,7 @@ export default function Hero({ leftBanners = [], rightTwoBanners = [], rightThre
           </div>
 
           {/* Right Side Banners - 4 columns */}
-          <div className="col-12 col-lg-4">
+          <div className="col-12 col-lg-3">
             <div className="row g-4 h-100">
               {/* Top Right Banner */}
               <div className="col-12 col-md-6 col-lg-12">
@@ -70,7 +59,7 @@ export default function Hero({ leftBanners = [], rightTwoBanners = [], rightThre
                   href={`/category/${rightTwoBanner?.category?.slug || 'gaming'}`}
                   className="d-block h-100 position-relative overflow-hidden rounded-4 shadow-lg text-decoration-none"
                   style={{
-                    minHeight: '190px',
+                    minHeight: '210px',
                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
@@ -92,7 +81,7 @@ export default function Hero({ leftBanners = [], rightTwoBanners = [], rightThre
                   href={`/category/${rightThreeBanner?.category?.slug || 'audio'}`}
                   className="d-block h-100 position-relative overflow-hidden rounded-4 shadow-lg text-decoration-none"
                   style={{
-                    minHeight: '190px',
+                    minHeight: '210px',
                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
