@@ -8,7 +8,6 @@ const nextConfig = {
       'images.unsplash.com',
       'via.placeholder.com',
       "m.media-amazon.com"
-      // Add any other domains you need
     ],
   },
 };
