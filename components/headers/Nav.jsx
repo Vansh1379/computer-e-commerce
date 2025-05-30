@@ -12,17 +12,20 @@ export default function Nav() {
   };
   const isMenuParentActive = (menu) => {
     return menu.some((elm) => isMenuActive(elm));
-  }; 
+  };
   const isMenuParentActive2 = (menu) => {
     return menu.some((elm) => isMenuParentActive(elm.items));
   };
 
   return (
     <>
-      <a href="#" className="item-link link body-md-2 fw-semibold">
-        <NavCategories styleClass="" />
-        <span className="margin-Home">Home</span>
-      </a>
+      {/* Fixed: Removed the wrapping <a> tag to avoid nested anchors */}
+      <li className="nav-item">
+        <div className="item-link link body-md-2 fw-semibold d-flex align-items-center">
+          <NavCategories styleClass="" />
+          <span className="margin-Home">Home</span>
+        </div>
+      </li>
 
       <li
         className={`nav-item ${isMenuParentActive2(shopPages) ? "active" : ""}`}
@@ -54,9 +57,8 @@ export default function Nav() {
         </div>
       </li>
       <li
-        className={`nav-item ${
-          isMenuParentActive2(shopDetailsPages) ? "active" : ""
-        }`}
+        className={`nav-item ${isMenuParentActive2(shopDetailsPages) ? "active" : ""
+          }`}
       >
         <a href="#" className="item-link body-md-2 fw-semibold">
           <span>Product</span>
@@ -85,9 +87,8 @@ export default function Nav() {
         </div>
       </li>
       <li
-        className={`nav-item ${
-          isMenuParentActive(blogMenuItems) ? "active" : ""
-        }`}
+        className={`nav-item ${isMenuParentActive(blogMenuItems) ? "active" : ""
+          }`}
       >
         <a href="#" className="item-link body-md-2 fw-semibold">
           <span>Blog</span>
@@ -109,9 +110,11 @@ export default function Nav() {
         </div>
       </li>
 
-      <a href="#" className="item-link body-md-2 fw-semibold ">
-        <span className="--bs-gray-700">Build Your PC</span>
-      </a>
+      <li className="nav-item">
+        <a href="#" className="item-link body-md-2 fw-semibold">
+          <span className="--bs-gray-700">Build Your PC</span>
+        </a>
+      </li>
     </>
   );
 }
