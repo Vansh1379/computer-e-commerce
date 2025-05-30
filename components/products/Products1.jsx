@@ -1,8 +1,6 @@
 "use client";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import FilterOptions from "./FilterOptions";
-import { products3 } from "@/data/products";
-
 import ShowLength from "./ShowLength";
 import { initialState, reducer } from "@/reducer/filterReducer";
 import LayoutHandler from "./LayoutHandler";
@@ -119,27 +117,97 @@ const ProductBanner = () => {
   );
 };
 
+// Transform API product to match your existing format
+const transformProduct = (apiProduct) => {
+  return {
+    id: apiProduct.id,
+    title: apiProduct.name || "Untitled Product",
+    price: Number(apiProduct.newPrice || 0),
+    oldPrice:
+      apiProduct.oldPrice && Number(apiProduct.oldPrice) > 0
+        ? Number(apiProduct.oldPrice)
+        : null,
+    imgSrc: apiProduct.images?.[0] || "/placeholder-image.jpg",
+    imgHover:
+      apiProduct.images?.[1] ||
+      apiProduct.images?.[0] ||
+      "/placeholder-image.jpg",
+    rating: 4, // Default rating since API doesn't provide it
+    filterBrands: [apiProduct.brand || "Unknown"],
+    inNew: Boolean(apiProduct.isFeatured),
+    isTodaysDeals: Boolean(apiProduct.isFeatured),
+    brand: apiProduct.brand || "Unknown",
+    sku: apiProduct.sku || "",
+    description: apiProduct.description || "",
+    shortDescription: apiProduct.shortDescription || "",
+    stock: Number(apiProduct.stock || 0),
+    isActive: Boolean(apiProduct.isActive),
+    chipset: apiProduct.chipset || "",
+    gpuSeries: apiProduct.gpuSeries || "",
+    memorySize: apiProduct.memorySize || "",
+    memoryInterface: apiProduct.memoryInterface || "",
+    memoryType: apiProduct.memoryType || "",
+    warranty: apiProduct.warranty || "",
+  };
+};
+
 export default function Products1() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [totalProducts, setTotalProducts] = useState(0);
+
   const {
     price,
     isNew,
     deals,
     rating,
     brands,
-
     filtered,
     sortingOption,
     sorted,
-
     currentPage,
     itemPerPage,
   } = state;
 
+  // Fetch products from API
+  const fetchProducts = async (page = 1, limit = 20) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://unique.rightinfoservice.com/api/products?page=${page}&limit=${limit}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        const transformedProducts = data.products.map(transformProduct);
+        setProducts(transformedProducts);
+        setTotalProducts(data.count);
+      } else {
+        throw new Error("API returned unsuccessful response");
+      }
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch products on component mount
+  useEffect(() => {
+    fetchProducts(currentPage, itemPerPage);
+  }, [currentPage, itemPerPage]);
+
   const allProps = {
     ...state,
     setPrice: (value) => dispatch({ type: "SET_PRICE", payload: value }),
-
     setDeals: (value) => {
       value == deals
         ? dispatch({ type: "SET_DEALS", payload: "All" })
@@ -153,7 +221,6 @@ export default function Products1() {
     setIsNew: (value) => {
       dispatch({ type: "SET_ISNEW", payload: value });
     },
-
     setBrands: (newBrand) => {
       if (brands.includes(newBrand)) {
         const updated = [...brands].filter((brand) => brand != newBrand);
@@ -164,12 +231,10 @@ export default function Products1() {
     },
     removeBrand: (newBrand) => {
       const updated = [...brands].filter((brand) => brand != newBrand);
-
       dispatch({ type: "SET_BRANDS", payload: updated });
     },
     setSortingOption: (value) =>
       dispatch({ type: "SET_SORTING_OPTION", payload: value }),
-
     setCurrentPage: (value) =>
       dispatch({ type: "SET_CURRENT_PAGE", payload: value }),
     setItemPerPage: (value) => {
@@ -181,17 +246,23 @@ export default function Products1() {
     },
   };
 
+  // Filter products based on selected filters
   useEffect(() => {
+    if (products.length === 0) {
+      dispatch({ type: "SET_FILTERED", payload: [] });
+      return;
+    }
+
     let filteredArrays = [];
 
     if (brands.length) {
-      const filteredByBrands = [...products3].filter((elm) =>
+      const filteredByBrands = [...products].filter((elm) =>
         brands.some((el) => elm.filterBrands.includes(el))
       );
       filteredArrays = [...filteredArrays, filteredByBrands];
     }
     if (isNew !== "All") {
-      const filteredByisNew = [...products3].filter((elm) => {
+      const filteredByisNew = [...products].filter((elm) => {
         if (isNew) {
           return elm.inNew;
         } else {
@@ -202,44 +273,50 @@ export default function Products1() {
     }
     if (deals !== "All") {
       if (deals == "All Discounts") {
-        const filteredBydeails = [...products3].filter((elm) => elm.oldPrice);
+        const filteredBydeails = [...products].filter((elm) => elm.oldPrice);
         filteredArrays = [...filteredArrays, filteredBydeails];
       }
       if (deals == "Today's Deals") {
-        const filteredBydeails = [...products3].filter(
+        const filteredBydeails = [...products].filter(
           (elm) => elm.isTodaysDeals
         );
         filteredArrays = [...filteredArrays, filteredBydeails];
       }
     }
     if (rating !== "All") {
-      const filteredByrating = [...products3].filter(
+      const filteredByrating = [...products].filter(
         (elm) => elm.rating >= rating
       );
       filteredArrays = [...filteredArrays, filteredByrating];
     }
 
-    const filteredByPrice = [...products3].filter(
-      (elm) => elm.price >= price[0] && elm.price <= price[1]
+    const filteredByPrice = [...products].filter(
+      (elm) =>
+        Number(elm.price || 0) >= price[0] && Number(elm.price || 0) <= price[1]
     );
     filteredArrays = [...filteredArrays, filteredByPrice];
 
-    const commonItems = [...products3].filter((item) =>
+    const commonItems = [...products].filter((item) =>
       filteredArrays.every((array) => array.includes(item))
     );
     dispatch({ type: "SET_FILTERED", payload: commonItems });
-  }, [price, isNew, deals, rating, brands]);
+  }, [price, isNew, deals, rating, brands, products]);
 
+  // Sort filtered products
   useEffect(() => {
     if (sortingOption === "Price Ascending") {
       dispatch({
         type: "SET_SORTED",
-        payload: [...filtered].sort((a, b) => a.price - b.price),
+        payload: [...filtered].sort(
+          (a, b) => Number(a.price || 0) - Number(b.price || 0)
+        ),
       });
     } else if (sortingOption === "Price Descending") {
       dispatch({
         type: "SET_SORTED",
-        payload: [...filtered].sort((a, b) => b.price - a.price),
+        payload: [...filtered].sort(
+          (a, b) => Number(b.price || 0) - Number(a.price || 0)
+        ),
       });
     } else if (sortingOption === "Title Ascending") {
       dispatch({
@@ -257,6 +334,7 @@ export default function Products1() {
     dispatch({ type: "SET_CURRENT_PAGE", payload: 1 });
   }, [filtered, sortingOption]);
 
+  // Filter sidebar functionality
   useEffect(() => {
     const handleOpenFilter = () => {
       if (window.innerWidth <= 1200) {
@@ -272,13 +350,11 @@ export default function Products1() {
       document.body.classList.toggle("no-scroll");
     };
 
-    // Get all elements that should trigger the open action
     const openButtons = document.querySelectorAll("#filterShop, .sidebar-btn");
     openButtons.forEach((button) => {
       button.addEventListener("click", handleOpenFilter);
     });
 
-    // Get all elements that should trigger the close action
     const closeButtons = document.querySelectorAll(
       ".close-filter, .overlay-filter"
     );
@@ -286,7 +362,6 @@ export default function Products1() {
       button.addEventListener("click", handleCloseFilter);
     });
 
-    // Cleanup function to remove event listeners
     return () => {
       openButtons.forEach((button) => {
         button.removeEventListener("click", handleOpenFilter);
@@ -295,7 +370,51 @@ export default function Products1() {
         button.removeEventListener("click", handleCloseFilter);
       });
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
+
+  // Handle pagination
+  const handlePageChange = (newPage) => {
+    allProps.setCurrentPage(newPage);
+    fetchProducts(newPage, itemPerPage);
+  };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flat-content">
+        <div className="container">
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "400px" }}
+          >
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="flat-content">
+        <div className="container">
+          <div className="alert alert-danger text-center" role="alert">
+            <h4>Error Loading Products</h4>
+            <p>{error}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => fetchProducts(currentPage, itemPerPage)}
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flat-content">
@@ -322,7 +441,6 @@ export default function Products1() {
             </div>
           </div>
           <div className="content-area">
-            {/* Banner Component Added Here */}
             <ProductBanner />
             <div className="tf-shop-control flex-wrap gap-10">
               <div className="d-flex align-items-center gap-10">
@@ -344,23 +462,23 @@ export default function Products1() {
                   <span className="body-md-2 fw-medium">Filter</span>
                 </button>
                 <p className="body-text-3 d-none d-lg-block">
-                  1-16 of 66 results for "
-                  <span className="title-sidebar fw-bold"> macbook m1 </span>"
+                  1-{Math.min(itemPerPage, totalProducts)} of {totalProducts}{" "}
+                  results
                 </p>
               </div>
               <div className="tf-control-view flat-title-tab-product flex-wrap">
                 <LayoutHandler />
               </div>
-            </div>{" "}
-            {/* this is the filter option which comes above the product listed
-            and comes when he filter option is selected */}
+            </div>
+
+            {/* Filter tags */}
             {price[0] != 0 ||
             price[1] != 100 ||
             isNew != "All" ||
             deals != "All" ||
             rating != "All" ||
             brands.length ? (
-              <div className="meta-filter-shop" style={{}}>
+              <div className="meta-filter-shop">
                 <div id="product-count-grid" className="count-text">
                   <span className="count">{sorted.length}</span> Products Found
                 </div>
@@ -416,10 +534,7 @@ export default function Products1() {
                       onClick={() => allProps.setPrice([0, 100])}
                     >
                       ${price[0]} to ${price[1]}
-                      <span
-                        className="remove-tag icon-close"
-                        data-filter="priceRadio"
-                      />
+                      <span className="remove-tag icon-close" />
                     </span>
                   )}
                 </div>
@@ -435,54 +550,66 @@ export default function Products1() {
             ) : (
               ""
             )}
+
             <div className="gridLayout-wrapper">
               <div
                 className="tf-grid-layout lg-col-4 md-col-3 sm-col-2 flat-grid-product wrapper-shop layout-tabgrid-1"
                 id="gridLayout"
               >
-                {/*the main file which renders the products it takes data from product.js 
-                data set and then goes to reducer by redux and comes by the name of sorted
-                 from redux to this file and then gets render*/}
-                {sorted.map((product, i) => (
-                  <ProductCards3 key={i} product={product} />
-                ))}
-                {/* Navigation */}
+                {sorted.length > 0 ? (
+                  sorted.map((product, i) => (
+                    <ProductCards3 key={product.id} product={product} />
+                  ))
+                ) : (
+                  <div className="col-12 text-center py-5">
+                    <p className="text-muted">
+                      No products found matching your criteria.
+                    </p>
+                  </div>
+                )}
+
+                {/* Navigation - Updated to work with API pagination */}
                 <ul className="wg-pagination wd-load">
                   <li>
-                    <a href="#" className="link">
+                    <button
+                      className="link"
+                      disabled={currentPage <= 1}
+                      onClick={() => handlePageChange(currentPage - 1)}
+                    >
                       <i className="icon-arrow-left-lg" />
-                    </a>
+                    </button>
                   </li>
-                  <li className="active">
-                    <p className="title-normal link">1</p>
-                  </li>
+                  {Array.from(
+                    {
+                      length: Math.min(
+                        5,
+                        Math.ceil(totalProducts / itemPerPage)
+                      ),
+                    },
+                    (_, i) => i + 1
+                  ).map((page) => (
+                    <li
+                      key={page}
+                      className={currentPage === page ? "active" : ""}
+                    >
+                      <button
+                        className="title-normal link"
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </button>
+                    </li>
+                  ))}
                   <li>
-                    <a href="#" className="title-normal link">
-                      2
-                    </a>
-                  </li>
-                  <li className="d-none d-sm-flex">
-                    <a href="#" className="title-normal link">
-                      3
-                    </a>
-                  </li>
-                  <li className="d-none d-sm-flex">
-                    <a href="#" className="title-normal link">
-                      4
-                    </a>
-                  </li>
-                  <li>
-                    <p className="title-normal">...</p>
-                  </li>
-                  <li>
-                    <a href="#" className="title-normal link">
-                      10
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="link">
+                    <button
+                      className="link"
+                      disabled={
+                        currentPage >= Math.ceil(totalProducts / itemPerPage)
+                      }
+                      onClick={() => handlePageChange(currentPage + 1)}
+                    >
                       <i className="icon-arrow-right-lg" />
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>
