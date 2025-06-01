@@ -1,8 +1,6 @@
 "use client";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterOptions from "./FilterOptions";
-import ShowLength from "./ShowLength";
-import { initialState, reducer } from "@/reducer/filterReducer";
 import LayoutHandler from "./LayoutHandler";
 import ProductCards3 from "../productCards/ProductCards3";
 
@@ -152,24 +150,15 @@ const transformProduct = (apiProduct) => {
 };
 
 export default function Products1() {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
+  const [sortingOption, setSortingOption] = useState("Default");
+  const [displayProducts, setDisplayProducts] = useState([]);
 
-  const {
-    price,
-    isNew,
-    deals,
-    rating,
-    brands,
-    filtered,
-    sortingOption,
-    sorted,
-    currentPage,
-    itemPerPage,
-  } = state;
+  const itemPerPage = 20;
 
   // Fetch products from API
   const fetchProducts = async (page = 1, limit = 20) => {
@@ -184,170 +173,68 @@ export default function Products1() {
       }
 
       const data = await response.json();
+      console.log("API Response:", data);
 
-      if (data.success) {
+      if (data.success && data.products) {
         const transformedProducts = data.products.map(transformProduct);
+        console.log("Transformed Products:", transformedProducts);
         setProducts(transformedProducts);
-        setTotalProducts(data.count);
+        setDisplayProducts(transformedProducts); // Set display products directly
+        setTotalProducts(data.count || data.products.length);
       } else {
-        throw new Error("API returned unsuccessful response");
+        throw new Error("API returned unsuccessful response or no products");
       }
     } catch (err) {
       console.error("Error fetching products:", err);
       setError(err.message);
+      setProducts([]);
+      setDisplayProducts([]);
+      setTotalProducts(0);
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch products on component mount
+  // Fetch products on component mount and when pagination changes
   useEffect(() => {
     fetchProducts(currentPage, itemPerPage);
-  }, [currentPage, itemPerPage]);
+  }, [currentPage]);
 
-  const allProps = {
-    ...state,
-    setPrice: (value) => dispatch({ type: "SET_PRICE", payload: value }),
-    setDeals: (value) => {
-      value == deals
-        ? dispatch({ type: "SET_DEALS", payload: "All" })
-        : dispatch({ type: "SET_DEALS", payload: value });
-    },
-    setRating: (value) => {
-      value == rating
-        ? dispatch({ type: "SET_RATING", payload: "All" })
-        : dispatch({ type: "SET_RATING", payload: value });
-    },
-    setIsNew: (value) => {
-      dispatch({ type: "SET_ISNEW", payload: value });
-    },
-    setBrands: (newBrand) => {
-      if (brands.includes(newBrand)) {
-        const updated = [...brands].filter((brand) => brand != newBrand);
-        dispatch({ type: "SET_BRANDS", payload: updated });
-      } else {
-        dispatch({ type: "SET_BRANDS", payload: [...brands, newBrand] });
-      }
-    },
-    removeBrand: (newBrand) => {
-      const updated = [...brands].filter((brand) => brand != newBrand);
-      dispatch({ type: "SET_BRANDS", payload: updated });
-    },
-    setSortingOption: (value) =>
-      dispatch({ type: "SET_SORTING_OPTION", payload: value }),
-    setCurrentPage: (value) =>
-      dispatch({ type: "SET_CURRENT_PAGE", payload: value }),
-    setItemPerPage: (value) => {
-      dispatch({ type: "SET_CURRENT_PAGE", payload: 1 }),
-        dispatch({ type: "SET_ITEM_PER_PAGE", payload: value });
-    },
-    clearFilter: () => {
-      dispatch({ type: "CLEAR_FILTER" });
-    },
-  };
-
-  // Filter products based on selected filters
+  // Simple sorting logic (no complex filtering)
   useEffect(() => {
-    if (products.length === 0) {
-      dispatch({ type: "SET_FILTERED", payload: [] });
-      return;
-    }
+    let sortedProducts = [...products];
 
-    let filteredArrays = [];
-
-    if (brands.length) {
-      const filteredByBrands = [...products].filter((elm) =>
-        brands.some((el) => elm.filterBrands.includes(el))
-      );
-      filteredArrays = [...filteredArrays, filteredByBrands];
-    }
-    if (isNew !== "All") {
-      const filteredByisNew = [...products].filter((elm) => {
-        if (isNew) {
-          return elm.inNew;
-        } else {
-          return !elm.inNew;
-        }
-      });
-      filteredArrays = [...filteredArrays, filteredByisNew];
-    }
-    if (deals !== "All") {
-      if (deals == "All Discounts") {
-        const filteredBydeails = [...products].filter((elm) => elm.oldPrice);
-        filteredArrays = [...filteredArrays, filteredBydeails];
-      }
-      if (deals == "Today's Deals") {
-        const filteredBydeails = [...products].filter(
-          (elm) => elm.isTodaysDeals
-        );
-        filteredArrays = [...filteredArrays, filteredBydeails];
-      }
-    }
-    if (rating !== "All") {
-      const filteredByrating = [...products].filter(
-        (elm) => elm.rating >= rating
-      );
-      filteredArrays = [...filteredArrays, filteredByrating];
-    }
-
-    const filteredByPrice = [...products].filter(
-      (elm) =>
-        Number(elm.price || 0) >= price[0] && Number(elm.price || 0) <= price[1]
-    );
-    filteredArrays = [...filteredArrays, filteredByPrice];
-
-    const commonItems = [...products].filter((item) =>
-      filteredArrays.every((array) => array.includes(item))
-    );
-    dispatch({ type: "SET_FILTERED", payload: commonItems });
-  }, [price, isNew, deals, rating, brands, products]);
-
-  // Sort filtered products
-  useEffect(() => {
     if (sortingOption === "Price Ascending") {
-      dispatch({
-        type: "SET_SORTED",
-        payload: [...filtered].sort(
-          (a, b) => Number(a.price || 0) - Number(b.price || 0)
-        ),
-      });
+      sortedProducts.sort(
+        (a, b) => Number(a.price || 0) - Number(b.price || 0)
+      );
     } else if (sortingOption === "Price Descending") {
-      dispatch({
-        type: "SET_SORTED",
-        payload: [...filtered].sort(
-          (a, b) => Number(b.price || 0) - Number(a.price || 0)
-        ),
-      });
+      sortedProducts.sort(
+        (a, b) => Number(b.price || 0) - Number(a.price || 0)
+      );
     } else if (sortingOption === "Title Ascending") {
-      dispatch({
-        type: "SET_SORTED",
-        payload: [...filtered].sort((a, b) => a.title.localeCompare(b.title)),
-      });
+      sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortingOption === "Title Descending") {
-      dispatch({
-        type: "SET_SORTED",
-        payload: [...filtered].sort((a, b) => b.title.localeCompare(a.title)),
-      });
-    } else {
-      dispatch({ type: "SET_SORTED", payload: filtered });
+      sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
     }
-    dispatch({ type: "SET_CURRENT_PAGE", payload: 1 });
-  }, [filtered, sortingOption]);
+
+    setDisplayProducts(sortedProducts);
+  }, [products, sortingOption]);
 
   // Filter sidebar functionality
   useEffect(() => {
     const handleOpenFilter = () => {
       if (window.innerWidth <= 1200) {
-        document.querySelector(".sidebar-filter").classList.add("show");
-        document.querySelector(".overlay-filter").classList.add("show");
+        document.querySelector(".sidebar-filter")?.classList.add("show");
+        document.querySelector(".overlay-filter")?.classList.add("show");
         document.body.classList.toggle("no-scroll");
       }
     };
 
     const handleCloseFilter = () => {
-      document.querySelector(".sidebar-filter").classList.remove("show");
-      document.querySelector(".overlay-filter").classList.remove("show");
-      document.body.classList.toggle("no-scroll");
+      document.querySelector(".sidebar-filter")?.classList.remove("show");
+      document.querySelector(".overlay-filter")?.classList.remove("show");
+      document.body.classList.remove("no-scroll");
     };
 
     const openButtons = document.querySelectorAll("#filterShop, .sidebar-btn");
@@ -374,8 +261,7 @@ export default function Products1() {
 
   // Handle pagination
   const handlePageChange = (newPage) => {
-    allProps.setCurrentPage(newPage);
-    fetchProducts(newPage, itemPerPage);
+    setCurrentPage(newPage);
   };
 
   // Loading state
@@ -416,10 +302,29 @@ export default function Products1() {
     );
   }
 
+  const totalPages = Math.ceil(totalProducts / itemPerPage);
+
+  // Dummy props for FilterOptions (keeping UI but no functionality)
+  const dummyFilterProps = {
+    price: [0, 100],
+    isNew: "All",
+    deals: "All",
+    rating: "All",
+    brands: [],
+    setPrice: () => {},
+    setDeals: () => {},
+    setRating: () => {},
+    setIsNew: () => {},
+    setBrands: () => {},
+    removeBrand: () => {},
+    clearFilter: () => {},
+  };
+
   return (
     <div className="flat-content">
       <div className="container">
         <div className="tf-product-view-content wrapper-control-shop">
+          {/* Filter Sidebar */}
           <div className="canvas-filter-product sidebar-filter handle-canvas left">
             <div className="canvas-wrapper">
               <div className="canvas-header d-flex d-xl-none">
@@ -427,21 +332,21 @@ export default function Products1() {
                 <span className="icon-close link icon-close-popup close-filter" />
               </div>
               <div className="canvas-body">
-                <FilterOptions allProps={allProps} />
+                <FilterOptions allProps={dummyFilterProps} />
               </div>
               <div className="canvas-bottom d-flex d-xl-none">
-                <button
-                  id="reset-filter"
-                  onClick={() => allProps.clearFilter()}
-                  className="tf-btn btn-reset w-100"
-                >
+                <button id="reset-filter" className="tf-btn btn-reset w-100">
                   <span className="caption text-white">Reset Filters</span>
                 </button>
               </div>
             </div>
           </div>
+
+          {/* Main Content Area */}
           <div className="content-area">
             <ProductBanner />
+
+            {/* Shop Controls */}
             <div className="tf-shop-control flex-wrap gap-10">
               <div className="d-flex align-items-center gap-10">
                 <button
@@ -462,114 +367,61 @@ export default function Products1() {
                   <span className="body-md-2 fw-medium">Filter</span>
                 </button>
                 <p className="body-text-3 d-none d-lg-block">
-                  1-{Math.min(itemPerPage, totalProducts)} of {totalProducts}{" "}
-                  results
+                  Showing {displayProducts.length} of {totalProducts} results
                 </p>
               </div>
               <div className="tf-control-view flat-title-tab-product flex-wrap">
+                <div className="d-flex align-items-center gap-3">
+                  <span>Sort by:</span>
+                  <select
+                    className="form-select"
+                    value={sortingOption}
+                    onChange={(e) => setSortingOption(e.target.value)}
+                    style={{ width: "auto", minWidth: "150px" }}
+                  >
+                    <option value="Default">Default</option>
+                    <option value="Price Ascending">Price: Low to High</option>
+                    <option value="Price Descending">Price: High to Low</option>
+                    <option value="Title Ascending">Name: A to Z</option>
+                    <option value="Title Descending">Name: Z to A</option>
+                  </select>
+                </div>
                 <LayoutHandler />
               </div>
             </div>
 
-            {/* Filter tags */}
-            {price[0] != 0 ||
-            price[1] != 100 ||
-            isNew != "All" ||
-            deals != "All" ||
-            rating != "All" ||
-            brands.length ? (
-              <div className="meta-filter-shop">
-                <div id="product-count-grid" className="count-text">
-                  <span className="count">{sorted.length}</span> Products Found
-                </div>
-                <div id="product-count-list" className="count-text" />
-                <div id="applied-filters">
-                  {isNew == true && (
-                    <span
-                      className="filter-tag"
-                      onClick={() => allProps.setIsNew("All")}
-                    >
-                      New <span className="remove-tag icon-close" />
-                    </span>
-                  )}
-                  {isNew == false && (
-                    <span
-                      className="filter-tag"
-                      onClick={() => allProps.setIsNew("All")}
-                    >
-                      Old <span className="remove-tag icon-close" />
-                    </span>
-                  )}
-                  {brands.map((elm, i) => (
-                    <span
-                      key={i}
-                      className="filter-tag"
-                      onClick={() => allProps.removeBrand(elm)}
-                    >
-                      {elm}
-                      <span className="remove-tag icon-close" />
-                    </span>
-                  ))}
-                  {deals != "All" && (
-                    <span
-                      className="filter-tag"
-                      onClick={() => allProps.setDeals("All")}
-                    >
-                      {deals}
-                      <span className="remove-tag icon-close" />
-                    </span>
-                  )}
-                  {rating != "All" && (
-                    <span
-                      className="filter-tag"
-                      onClick={() => allProps.setRating("All")}
-                    >
-                      {rating} Rating
-                      <span className="remove-tag icon-close" />
-                    </span>
-                  )}
-                  {(price[0] != 0 || price[1] != 100) && (
-                    <span
-                      className="filter-tag"
-                      onClick={() => allProps.setPrice([0, 100])}
-                    >
-                      ${price[0]} to ${price[1]}
-                      <span className="remove-tag icon-close" />
-                    </span>
-                  )}
-                </div>
-                <button
-                  id="remove-all"
-                  className="remove-all-filters"
-                  onClick={() => allProps.clearFilter()}
-                >
-                  <span className="caption">REMOVE ALL</span>
-                  <i className="icon icon-close" />
-                </button>
-              </div>
-            ) : (
-              ""
-            )}
-
+            {/* Products Grid */}
             <div className="gridLayout-wrapper">
               <div
                 className="tf-grid-layout lg-col-4 md-col-3 sm-col-2 flat-grid-product wrapper-shop layout-tabgrid-1"
                 id="gridLayout"
               >
-                {sorted.length > 0 ? (
-                  sorted.map((product, i) => (
+                {displayProducts && displayProducts.length > 0 ? (
+                  displayProducts.map((product) => (
                     <ProductCards3 key={product.id} product={product} />
                   ))
                 ) : (
                   <div className="col-12 text-center py-5">
                     <p className="text-muted">
-                      No products found matching your criteria.
+                      {loading ? "Loading..." : "No products available."}
                     </p>
                   </div>
                 )}
+              </div>
+            </div>
 
-                {/* Navigation - Updated to work with API pagination */}
-                <ul className="wg-pagination wd-load">
+            {/* Debug Info */}
+            <div className="mt-3 text-center">
+              <small className="text-muted">
+                Debug: Found {products.length} products, displaying{" "}
+                {displayProducts.length}
+              </small>
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="d-flex justify-content-center mt-4">
+                <ul className="wg-pagination">
                   <li>
                     <button
                       className="link"
@@ -581,31 +433,31 @@ export default function Products1() {
                   </li>
                   {Array.from(
                     {
-                      length: Math.min(
-                        5,
-                        Math.ceil(totalProducts / itemPerPage)
-                      ),
+                      length: Math.min(5, totalPages),
                     },
-                    (_, i) => i + 1
-                  ).map((page) => (
-                    <li
-                      key={page}
-                      className={currentPage === page ? "active" : ""}
-                    >
-                      <button
-                        className="title-normal link"
-                        onClick={() => handlePageChange(page)}
+                    (_, i) => {
+                      const pageNum = i + Math.max(1, currentPage - 2);
+                      return pageNum <= totalPages ? pageNum : null;
+                    }
+                  )
+                    .filter(Boolean)
+                    .map((page) => (
+                      <li
+                        key={page}
+                        className={currentPage === page ? "active" : ""}
                       >
-                        {page}
-                      </button>
-                    </li>
-                  ))}
+                        <button
+                          className="title-normal link"
+                          onClick={() => handlePageChange(page)}
+                        >
+                          {page}
+                        </button>
+                      </li>
+                    ))}
                   <li>
                     <button
                       className="link"
-                      disabled={
-                        currentPage >= Math.ceil(totalProducts / itemPerPage)
-                      }
+                      disabled={currentPage >= totalPages}
                       onClick={() => handlePageChange(currentPage + 1)}
                     >
                       <i className="icon-arrow-right-lg" />
@@ -613,9 +465,12 @@ export default function Products1() {
                   </li>
                 </ul>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Filter Overlay */}
+        <div className="overlay-filter" />
       </div>
     </div>
   );
