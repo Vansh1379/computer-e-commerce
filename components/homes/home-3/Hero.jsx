@@ -5,12 +5,9 @@ import Image from "next/image";
 import intel from "../../../public/images/hero/hero1.jpg";
 import controller from "../../../public/images/hero/controller.jpg";
 import headphone from "../../../public/images/hero/headphone.jpg";
+import bannerBg from "../../../public/images/banner/banner-8.jpg";
 
-export default function Hero({
-  leftBanners = [],
-  rightTwoBanners = [],
-  rightThreeBanners = [],
-}) {
+export default function Hero({ leftBanners = [], rightTwoBanners = [], rightThreeBanners = [] }) {
   // Get the first banner from each position, or use fallback data
   const leftBanner = leftBanners[0];
   const rightTwoBanner = rightTwoBanners[0];
@@ -19,31 +16,26 @@ export default function Hero({
   // Helper function to get image source
   const getImageSrc = (banner, fallbackImage) => {
     if (banner?.imageUrl) {
-      return banner.imageUrl.startsWith("/")
-        ? `${
-            process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ||
-            "http://localhost:4000"
-          }${banner.imageUrl}`
+      return banner.imageUrl.startsWith('/')
+        ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:4000'}${banner.imageUrl}`
         : banner.imageUrl;
     }
     return fallbackImage;
   };
 
   return (
-    <section className="py-5" style={{ minHeight: "100vh" }}>
-      <div
-        className="container-fluid px-4 position-relative"
-        style={{ zIndex: 1 }}
-      >
+    <section className="py-5" style={{ minHeight: '100vh' }}>
+
+      <div className="container-fluid px-4 position-relative" style={{ zIndex: 1 }}>
         <div className="row g-4 h-100">
           {/* Left Banner - 8 columns */}
           <div className="col-12 col-lg-9">
             <Link
-              href={`/category/${leftBanner?.category?.slug || "processors"}`}
+              href={`/category/${leftBanner?.category?.slug || 'processors'}`}
               className="d-block h-100 position-relative overflow-hidden rounded-4 shadow-lg text-decoration-none"
               style={{
-                minHeight: "450px",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                minHeight: '450px',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
               <Image
@@ -64,13 +56,11 @@ export default function Hero({
               {/* Top Right Banner */}
               <div className="col-12 col-md-6 col-lg-12">
                 <Link
-                  href={`/category/${
-                    rightTwoBanner?.category?.slug || "gaming"
-                  }`}
+                  href={`/category/${rightTwoBanner?.category?.slug || 'gaming'}`}
                   className="d-block h-100 position-relative overflow-hidden rounded-4 shadow-lg text-decoration-none"
                   style={{
-                    minHeight: "210px",
-                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                    minHeight: '210px',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
                   <Image
@@ -88,13 +78,11 @@ export default function Hero({
               {/* Bottom Right Banner */}
               <div className="col-12 col-md-6 col-lg-12">
                 <Link
-                  href={`/category/${
-                    rightThreeBanner?.category?.slug || "audio"
-                  }`}
+                  href={`/category/${rightThreeBanner?.category?.slug || 'audio'}`}
                   className="d-block h-100 position-relative overflow-hidden rounded-4 shadow-lg text-decoration-none"
                   style={{
-                    minHeight: "210px",
-                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                    minHeight: '210px',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
                   <Image
