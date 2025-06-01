@@ -11,7 +11,6 @@ export default function NavCategories({ styleClass = "" }) {
         setActiveDropdown(false); // Close the menu
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
