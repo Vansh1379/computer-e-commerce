@@ -7,30 +7,35 @@ import { usePathname } from "next/navigation";
 
 export default function Nav() {
   const pathname = usePathname();
+
   const isMenuActive = (link) => {
     return link.href?.split("/")[1] == pathname.split("/")[1];
   };
+
   const isMenuParentActive = (menu) => {
     return menu.some((elm) => isMenuActive(elm));
-  }; 
+  };
+
   const isMenuParentActive2 = (menu) => {
     return menu.some((elm) => isMenuParentActive(elm.items));
   };
 
   return (
     <>
-      <a href="#" className="item-link link body-md-2 fw-semibold">
+      {/* Home */}
+      <div className="item-link link body-md-2 fw-semibold flex items-center gap-2">
         <NavCategories styleClass="" />
         <span className="margin-Home">Home</span>
-      </a>
+      </div>
 
+      {/* Shop */}
       <li
         className={`nav-item ${isMenuParentActive2(shopPages) ? "active" : ""}`}
       >
-        <a href="#" className="item-link body-md-2 fw-semibold">
+        <div className="item-link body-md-2 fw-semibold">
           <span>Shop</span>
           <i className="icon icon-arrow-down" />
-        </a>
+        </div>
         <div className="sub-menu-container mega-menu text-nowrap">
           <div className="wrapper-sub-menu">
             {shopPages.map((menu) => (
@@ -40,7 +45,7 @@ export default function Nav() {
                   {menu.items.map((item) => (
                     <li
                       key={item.id}
-                      className={` ${isMenuActive(item) ? "active" : ""}`}
+                      className={`${isMenuActive(item) ? "active" : ""}`}
                     >
                       <Link href={item.href} className="body-md-2 link">
                         <span>{item.text}</span>
@@ -53,15 +58,17 @@ export default function Nav() {
           </div>
         </div>
       </li>
+
+      {/* Product */}
       <li
         className={`nav-item ${
           isMenuParentActive2(shopDetailsPages) ? "active" : ""
         }`}
       >
-        <a href="#" className="item-link body-md-2 fw-semibold">
+        <div className="item-link body-md-2 fw-semibold">
           <span>Product</span>
           <i className="icon icon-arrow-down" />
-        </a>
+        </div>
         <div className="sub-menu-container mega-menu text-nowrap">
           <div className="wrapper-sub-menu">
             {shopDetailsPages.map((menu) => (
@@ -71,7 +78,7 @@ export default function Nav() {
                   {menu.items.map((item) => (
                     <li
                       key={item.id}
-                      className={` ${isMenuActive(item) ? "active" : ""}`}
+                      className={`${isMenuActive(item) ? "active" : ""}`}
                     >
                       <Link href={item.href} className="body-md-2 link">
                         <span>{item.text}</span>
@@ -84,21 +91,23 @@ export default function Nav() {
           </div>
         </div>
       </li>
+
+      {/* Blog */}
       <li
         className={`nav-item ${
           isMenuParentActive(blogMenuItems) ? "active" : ""
         }`}
       >
-        <a href="#" className="item-link body-md-2 fw-semibold">
+        <div className="item-link body-md-2 fw-semibold">
           <span>Blog</span>
           <i className="icon icon-arrow-down" />
-        </a>
+        </div>
         <div className="sub-menu-container">
           <ul className="sub-menu-list">
             {blogMenuItems.map((item) => (
               <li
                 key={item.id}
-                className={` ${isMenuActive(item) ? "active" : ""}`}
+                className={`${isMenuActive(item) ? "active" : ""}`}
               >
                 <Link href={item.href} className="body-md-2 link">
                   <span>{item.text}</span>
@@ -109,9 +118,10 @@ export default function Nav() {
         </div>
       </li>
 
-      <a href="#" className="item-link body-md-2 fw-semibold ">
+      {/* Build Your PC */}
+      <Link href="/build-your-pc" className="item-link body-md-2 fw-semibold">
         <span className="--bs-gray-700">Build Your PC</span>
-      </a>
+      </Link>
     </>
   );
 }
