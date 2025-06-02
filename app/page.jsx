@@ -4,7 +4,7 @@ import Footer1 from "@/components/footers/Footer1";
 import Header1 from "@/components/headers/Header1";
 import Topbar1 from "@/components/headers/Topbar1";
 import Hero from "@/components/homes/home-3/Hero";
-import Products1 from "@/components/homes/home-3/Products1";
+import DealOfTheDay from "@/components/homes/home-3/DealOfTheDay";
 import Products from "@/components/homes/home-4/Products";
 import Products5 from "@/components/homes/home-3/Products5";
 import Products6 from "@/components/homes/home-3/LeftSideBannerProduct";
@@ -22,7 +22,7 @@ export default function Home() {
       <Topbar1 parentClass="tf-topbar" />
       <Header1 />
       <Hero />
-      <Products1 />
+      <DealOfTheDay />
       <Banner2 />
       <Products />
       <Products6 />
