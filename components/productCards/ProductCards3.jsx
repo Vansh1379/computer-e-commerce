@@ -9,11 +9,8 @@ import AddToWishlist from "../common/AddToWishlist";
 export default function ProductCards3({ product }) {
   const { addToWishlist, addProductToCart, isAddedToCartProducts } =
     useContextElement();
-
-  // Default quantity - you might want to make this dynamic
   const quantity = 1;
 
-  // Safety check for product data
   if (!product) {
     return null;
   }

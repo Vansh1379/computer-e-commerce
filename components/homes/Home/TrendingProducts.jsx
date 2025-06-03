@@ -100,18 +100,6 @@ export default function Products() {
                         productId={product.id}
                       />
                     </li>
-                    <li>
-                      <AddToQuickview
-                        productId={product.id}
-                        tooltipClass="tooltip-left"
-                      />
-                    </li>
-                    <li className={product.compareClass}>
-                      <AddToCompare
-                        productId={product.id}
-                        tooltipClass="tooltip-left"
-                      />
-                    </li>
                   </ul>
                 </div>
                 <div className="card-product-info">

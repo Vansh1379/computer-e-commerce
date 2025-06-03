@@ -8,7 +8,7 @@ import Header4 from "@/components/headers/Header4";
 import Banner from "@/components/homes/home-4/Banner";
 import Categories from "@/components/homes/home-4/Categories";
 import Hero from "@/components/homes/home-4/Hero";
-import Products from "@/components/homes/home-4/Products";
+import Products from "@/components/homes/Home/TrendingProducts";
 import Product2 from "@/components/homes/home-4/Products2";
 import React from "react";
 
