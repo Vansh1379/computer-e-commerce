@@ -1,15 +1,116 @@
 "use client";
-import { products14 } from "@/data/products";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
 import AddToCart from "@/components/common/AddToCart";
 import AddToWishlist from "@/components/common/AddToWishlist";
-import AddToQuickview from "@/components/common/AddToQuickview";
-import AddToCompare from "@/components/common/AddToCompare";
+
 export default function Products() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTrendingProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://unique.rightinfoservice.com/api/products/trending"
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.products) {
+          // Transform API data to match your component's expected format
+          const transformedProducts = data.products.map((product) => ({
+            id: product.id,
+            imgSrc:
+              product.images && product.images.length > 0
+                ? `https://unique.rightinfoservice.com${product.images[0]}`
+                : "/placeholder-image.jpg", // fallback image
+            imgHover:
+              product.images && product.images.length > 1
+                ? `https://unique.rightinfoservice.com${product.images[1]}`
+                : product.images && product.images.length > 0
+                ? `https://unique.rightinfoservice.com${product.images[0]}`
+                : "/placeholder-image.jpg",
+            width: 360,
+            height: 360,
+            category: product.category?.name || product.brand,
+            title: product.name,
+            price: parseFloat(product.newPrice),
+            originalPrice: product.oldPrice
+              ? parseFloat(product.oldPrice)
+              : null,
+            slug: product.slug,
+            stock: product.stock,
+            brand: product.brand,
+            sku: product.sku,
+            shortDescription: product.shortDescription,
+            animation: "fadeInUp", // Default animation
+            wowDelay: "0s",
+          }));
+
+          setProducts(transformedProducts);
+        } else {
+          throw new Error("Invalid API response format");
+        }
+      } catch (err) {
+        console.error("Error fetching trending products:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrendingProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="tf-sp-2">
+        <div className="container">
+          <div className="flat-title wow fadeInUp" data-wow-delay="0s">
+            <h5 className="fw-semibold">Trending Products</h5>
+          </div>
+          <div>Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="tf-sp-2">
+        <div className="container">
+          <div className="flat-title wow fadeInUp" data-wow-delay="0s">
+            <h5 className="fw-semibold">Trending Products</h5>
+          </div>
+          <div>Error loading products. Please try again.</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!products.length) {
+    return (
+      <section className="tf-sp-2">
+        <div className="container">
+          <div className="flat-title wow fadeInUp" data-wow-delay="0s">
+            <h5 className="fw-semibold">Trending Products</h5>
+          </div>
+          <div>No trending products available.</div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="tf-sp-2">
       <div className="container">
@@ -55,7 +156,7 @@ export default function Products() {
             nextEl: ".snbn40",
           }}
         >
-          {products14.map((product) => (
+          {products.map((product) => (
             <SwiperSlide key={product.id} className="swiper-slide">
               <div
                 className={`card-product ${
@@ -69,7 +170,7 @@ export default function Products() {
               >
                 <div className="card-product-wrapper">
                   <Link
-                    href={`/product-detail/${product.id}`}
+                    href={`/product-detail/${product.slug || product.id}`}
                     className="product-img"
                   >
                     <Image
@@ -109,7 +210,7 @@ export default function Products() {
                         {product.category}
                       </p>
                       <Link
-                        href={`/product-detail/${product.id}`}
+                        href={`/product-detail/${product.slug || product.id}`}
                         className="name-product body-md-2 fw-semibold text-secondary link"
                       >
                         {product.title}
@@ -117,7 +218,7 @@ export default function Products() {
                     </div>
                     <p className="price-wrap fw-medium">
                       <span className="new-price price-text fw-medium">
-                        ${product.price.toFixed(3)}
+                        ₹{product.price.toFixed(2)}
                       </span>
                     </p>
                   </div>

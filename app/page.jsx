@@ -7,8 +7,8 @@ import Hero from "@/components/homes/Home/Hero";
 import DealOfTheDay from "@/components/homes/Home/DealOfTheDay";
 import TrendingProducts from "@/components/homes/Home/TrendingProducts";
 import Products5 from "@/components/homes/home-3/Products5";
-import Products6 from "@/components/homes/Home/LeftSideBannerProduct";
-import Products7 from "@/components/homes/Home/RightSideBannerProducts";
+import LeftBannerProducts from "@/components/homes/Home/LeftSideBannerProduct";
+import RightBannerProducts from "@/components/homes/Home/RightSideBannerProducts";
 import BrandsSlider from "@/components/common/BrandsSlider";
 import CatageoryHome from "@/components/common/Catageory-Home";
 
@@ -25,11 +25,11 @@ export default function Home() {
       <DealOfTheDay />
       <Banner2 />
       <TrendingProducts />
-      <Products6 />
+      <LeftBannerProducts />
       <Banner2 />
       <Products5 />
       <CatageoryHome />
-      <Products7 />
+      <RightBannerProducts />
       <Features />
       <BrandsSlider />
       <Footer1 />
