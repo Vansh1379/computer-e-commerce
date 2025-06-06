@@ -13,8 +13,8 @@ import BrandsSlider from "@/components/common/BrandsSlider";
 import CatageoryHome from "@/components/common/Catageory-Home";
 
 export const metadata = {
-  title: "Home || Onsus - Multipurpose React Nextjs eCommerce",
-  description: "Onsus - Multipurpose React Nextjs eCommerce",
+  title: "Uniq Infotech",
+  description: "uniq Infotech",
 };
 export default function Home() {
   return (
