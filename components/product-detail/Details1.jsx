@@ -9,6 +9,83 @@ import EMI from "../../public/images/EMI.png";
 export default function Details1({ product }) {
   const [quantity, setQuantity] = useState(1);
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
+
+  // Helper function to render specifications
+  const renderSpecifications = () => {
+    if (
+      !product.specifications ||
+      Object.keys(product.specifications).length === 0
+    ) {
+      return (
+        <>
+          <li>
+            <p className="body-md-2 fw-semibold">Brand</p>
+            <span className="body-text-3">{product.brand || "N/A"}</span>
+          </li>
+          <li>
+            <p className="body-md-2 fw-semibold">SKU</p>
+            <span className="body-text-3">{product.sku || "N/A"}</span>
+          </li>
+        </>
+      );
+    }
+
+    return Object.entries(product.specifications)
+      .slice(0, 4)
+      .map(([key, value]) => (
+        <li key={key}>
+          <p className="body-md-2 fw-semibold">{key}</p>
+          <span className="body-text-3">{value}</span>
+        </li>
+      ));
+  };
+
+  // Helper function to render product description
+  const renderProductDescription = () => {
+    if (product.longDescription) {
+      return (
+        <ul className="product-about-list">
+          <li>
+            <p className="body-text-3">{product.longDescription}</p>
+          </li>
+        </ul>
+      );
+    }
+
+    if (product.shortDescription) {
+      return (
+        <ul className="product-about-list">
+          <li>
+            <p className="body-text-3">{product.shortDescription}</p>
+          </li>
+        </ul>
+      );
+    }
+
+    // Fallback content
+    return (
+      <ul className="product-about-list">
+        <li>
+          <p className="body-text-3">
+            High-quality product with excellent features and reliable
+            performance.
+          </p>
+        </li>
+        <li>
+          <p className="body-text-3">
+            Designed to meet your needs with premium materials and
+            craftsmanship.
+          </p>
+        </li>
+        <li>
+          <p className="body-text-3">
+            Easy to use and maintain for long-lasting satisfaction.
+          </p>
+        </li>
+      </ul>
+    );
+  };
+
   return (
     <section>
       <div className="tf-main-product section-image-zoom">
@@ -18,13 +95,16 @@ export default function Details1({ product }) {
               {/* Product Image */}
               <div className="tf-product-media-wrap thumbs-default sticky-top">
                 <div className="thumbs-slider">
-                  <Slider1 firstIamge={product.imgSrc} />
+                  <Slider1
+                    firstImage={product.imgSrc}
+                    images={product.images || [product.imgSrc]}
+                  />
                 </div>
               </div>
               {/* /Product Image */}
             </div>
             <div className="col-md-6">
-              {/* Product Infor */}
+              {/* Product Info */}
               <div className="tf-product-info-wrap position-relative">
                 <div className="tf-zoom-main" />
                 <div className="tf-product-info-list other-image-zoom flex-xxl-nowrap">
@@ -36,13 +116,11 @@ export default function Details1({ product }) {
                           href={`/shop-default`}
                           className="link text-secondary"
                         >
-                          Consumer Electronics
+                          {product.category || "Electronics"}
                         </Link>
                       </p>
                       <h5 className="product-info-name fw-semibold">
-                        {product.title ??
-                          `Elite Gourmet EKT1001B Electric BPA-Free Glass Kettle,
-                        Cordless 360° Base`}
+                        {product.title || "Product Name"}
                       </h5>
                       <ul className="product-info-rate-wrap">
                         <li className="star-review">
@@ -66,83 +144,39 @@ export default function Details1({ product }) {
                           <p className="caption text-main-2">Reviews (1.738)</p>
                         </li>
                         <li>
-                          <p className="caption text-main-2">Sold: 349</p>
+                          <p className="caption text-main-2">
+                            {product.available
+                              ? `Available: ${product.available}`
+                              : "Sold: 349"}
+                          </p>
                         </li>
                       </ul>
                     </div>
                     <div className="infor-center">
                       <div className="product-info-price">
                         <h4 className="text-primary">
-                          ₹{product.price.toFixed(2)}
-                        </h4>{" "}
-                        {product.oldPrice && (
-                          <span className="price-text text-main-2 old-price">
-                            ₹{product.oldPrice.toFixed(2)}
-                          </span>
-                        )}
+                          ₹{product.price ? product.price.toFixed(2) : "0.00"}
+                        </h4>
+                        {product.oldPrice &&
+                          product.oldPrice > product.price && (
+                            <span className="price-text text-main-2 old-price">
+                              ₹{product.oldPrice.toFixed(2)}
+                            </span>
+                          )}
                       </div>
                       <ul className="product-fearture-list">
-                        <li>
-                          <p className="body-md-2 fw-semibold">Brand</p>
-                          <span className="body-text-3">Elite Gourmet</span>
-                        </li>
-                        <li>
-                          <p className="body-md-2 fw-semibold">Capacity</p>
-                          <span className="body-text-3">1 Liters</span>
-                        </li>
-                        <li>
-                          <p className="body-md-2 fw-semibold">Material</p>
-                          <span className="body-text-3">Glass</span>
-                        </li>
-                        <li>
-                          <p className="body-md-2 fw-semibold">Wattage</p>
-                          <span className="body-text-3">1100 watts</span>
-                        </li>
+                        {renderSpecifications()}
                       </ul>
                     </div>
                     <div className="infor-bottom">
                       <h6 className="fw-semibold">About this item</h6>
-                      <ul className="product-about-list">
-                        <li>
-                          <p className="body-text-3">
-                            Here's the quickest way to enjoy your delicious hot
-                            tea every single day.
-                          </p>
-                        </li>
-                        <li>
-                          <p className="body-text-3">
-                            100% BPA - Free premium design meets excellent
-                          </p>
-                        </li>
-                        <li>
-                          <p className="body-text-3">
-                            No more messy accidents or spills
-                          </p>
-                        </li>
-                        <li>
-                          <p className="body-text-3">
-                            So easy &amp; convenient that everyone can use it
-                          </p>
-                        </li>
-                        <li>
-                          <p className="body-text-3">
-                            This powerful 900-1100-Watt kettle has convenient
-                            capacity markings on the body lets you accurately
-                          </p>
-                        </li>
-                        <li>
-                          <p className="body-text-3">
-                            1 year limited warranty and us-based customer
-                            support team lets you buy with confidence.
-                          </p>
-                        </li>
-                      </ul>
+                      {renderProductDescription()}
                     </div>
                   </div>
                   <div className="tf-product-info-choose-option sticky-top">
                     <div className="product-delivery">
                       <p className="price-text fw-medium text-primary">
-                        ₹{product.price.toFixed(2)}
+                        ₹{product.price ? product.price.toFixed(2) : "0.00"}
                       </p>
                       <p>
                         <i className="icon-delivery-2" /> Free shipping
@@ -209,12 +243,13 @@ export default function Details1({ product }) {
                           Replacement within 30 days of receipt
                         </span>
                         <span>Support: Free Amazon tech support included</span>
+                        {product.sku && <span>SKU: {product.sku}</span>}
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              {/* /Product Infor */}
+              {/* /Product Info */}
             </div>
           </div>
         </div>

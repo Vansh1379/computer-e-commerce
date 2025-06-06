@@ -1,6 +1,78 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-export default function Description() {
+
+export default function Description({ product }) {
+  if (!product) {
+    return null;
+  }
+
+  const {
+    longDescription,
+    shortDescription,
+    specifications = {},
+    brand,
+    sku,
+    category,
+    stock,
+    createdAt,
+    reviewStats = {},
+  } = product;
+
+  const {
+    totalReviews = 0,
+    averageRating = 0,
+    ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  } = reviewStats;
+
+  // Format date
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  // Calculate rating percentages
+  const calculateRatingPercentage = (rating) => {
+    if (totalReviews === 0) return 0;
+    return Math.round((ratingDistribution[rating] / totalReviews) * 100);
+  };
+
+  // Render stars based on rating
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <li key={i}>
+          <i
+            className={`icon-star ${
+              i <= Math.floor(rating) ? "" : "text-main-4"
+            }`}
+          />
+        </li>
+      );
+    }
+    return stars;
+  };
+
+  // Handle scroll to review form
+  const handleWriteReview = (e) => {
+    e.preventDefault();
+    // Scroll to review form or trigger form focus
+    const reviewForm = document.querySelector(
+      '.form-add-comment input[type="text"]'
+    );
+    if (reviewForm) {
+      reviewForm.focus();
+      reviewForm.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <section className="tf-sp-4">
       <div className="container">
@@ -9,17 +81,8 @@ export default function Description() {
             <ul className="menu-tab-line" role="tablist">
               <li className="nav-tab-item" role="presentation">
                 <a
-                  href="#prd-usually"
-                  className="tab-link product-title fw-semibold active"
-                  data-bs-toggle="tab"
-                >
-                  Usually Bought Together
-                </a>
-              </li>
-              <li className="nav-tab-item" role="presentation">
-                <a
                   href="#prd-des"
-                  className="tab-link product-title fw-semibold"
+                  className="tab-link product-title fw-semibold active"
                   data-bs-toggle="tab"
                 >
                   Description
@@ -31,7 +94,7 @@ export default function Description() {
                   className="tab-link product-title fw-semibold"
                   data-bs-toggle="tab"
                 >
-                  Product information
+                  Product Information
                 </a>
               </li>
               <li className="nav-tab-item" role="presentation">
@@ -40,348 +103,184 @@ export default function Description() {
                   className="tab-link product-title fw-semibold"
                   data-bs-toggle="tab"
                 >
-                  Reviews
+                  Reviews ({totalReviews})
                 </a>
               </li>
             </ul>
           </div>
           <div className="tab-content">
-            <div
-              className="tab-pane active show"
-              id="prd-usually"
-              role="tabpanel"
-            >
-              <div className="tab-main tab-usually flex-md-wrap">
-                <div className="card-usually hover-img">
-                  <a href="#" className="image img-style">
-                    <Image
-                      src="/images/product/usually-buy-2.jpg"
-                      alt=""
-                      className="lazyload"
-                      width={500}
-                      height={500}
-                    />
-                  </a>
-                  <div className="content">
-                    <div className="checkbox-item-wrap">
-                      <label>
-                        <input
-                          type="checkbox"
-                          className="checkbox-item"
-                          defaultChecked=""
-                        />
-                        <span className="btn-checkbox" />
-                      </label>
-                    </div>
-                    <div className="box-name">
-                      <a
-                        href="#"
-                        className="prd-name body-md-2 text-main link-secondary fw-semibold"
-                      >
-                        This item: Elite Gourmet EKT1001B Electric BPA-Free
-                        Glass Kettle, Cordless 360°...
-                      </a>
-                      <p className="price-text fw-medium">₹18.99</p>
-                    </div>
-                  </div>
-                </div>
-                <span className="icon">
-                  <i className="icon-plus fs-28" />
-                </span>
-                <div className="card-usually hover-img">
-                  <a href="#" className="image img-style">
-                    <Image
-                      src="/images/product/usually-buy-1.jpg"
-                      alt=""
-                      className="lazyload"
-                      width={500}
-                      height={500}
-                    />
-                  </a>
-                  <div className="content">
-                    <div className="checkbox-item-wrap">
-                      <label>
-                        <input type="checkbox" className="checkbox-item" />
-                        <span className="btn-checkbox" />
-                      </label>
-                    </div>
-                    <div className="box-name">
-                      <a
-                        href="#"
-                        className="prd-name body-md-2 text-main link-secondary fw-semibold"
-                      >
-                        Rubbermaid No-Slip Large, Silverware Tray Organizer,
-                        Black with Gray
-                      </a>
-                      <p className="price-text fw-medium">₹8.29</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="box-total-btn">
-                  <p className="body-text-3 text-center">
-                    Total price: <span className="text-primary">₹27.29</span>
-                  </p>
-                  <a
-                    href="#shoppingCart"
-                    data-bs-toggle="offcanvas"
-                    className="tf-btn btn-line"
-                  >
-                    Add to cart
-                    <i className="icon-cart-2" />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="tab-pane" id="prd-des" role="tabpanel">
+            {/* Description Tab */}
+            <div className="tab-pane active show" id="prd-des" role="tabpanel">
               <div className="tab-main tab-des">
-                <p className="body-text-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  tristique nisi id leo mollis egestas. Ut ac ante tincidunt
-                  dolor viverra vestibulum. Fusce eget pharetra lorem.
-                  Pellentesque ac feugiat nisi. Nulla sollicitudin cursus neque,
-                  dapibus aliquet nulla congue congue. In eget sagittis metus,
-                  nec semper tortor. Etiam in nunc dui. Sed nibh ante, maximus
-                  eu commodo ac, mattis quis elit. Maecenas cursus libero et
-                  risus sollicitudin mollis. Sed ultricies sagittis sem, vel
-                  iaculis sapien dapibus non. Vivamus facilisis, diam et
-                  condimentum sagittis, lectus enim iaculis ipsum, eu finibus
-                  urna tellus sit amet ex. Aliquam eget rhoncus lorem. Duis ut
-                  metus eget sapien lobortis varius id vel arcu. Sed hendrerit,
-                  arcu eget ullamcorper efficitur, enim magna tempus erat, id
-                  pretium libero ligula vitae tortor. Aliquam vehicula eleifend
-                  sem nec maximus. Aenean ultricies ipsum et laoreet tincidunt.
-                </p>
-                <div className="image">
-                  <Image
-                    src="/images/product/description-1.jpg"
-                    alt=""
-                    className="lazyload"
-                    width={900}
-                    height={506}
-                  />
-                </div>
-                <p className="body-text-3">
-                  Morbi interdum purus id justo pellentesque feugiat. Sed
-                  malesuada facilisis enim, volutpat ultrices nulla commodo ut.
-                  Proin pulvinar pharetra lacinia. Nulla massa massa, elementum
-                  vel gravida nec, fermentum vel risus. Cras eu ipsum id metus
-                  sollicitudin scelerisque. Maecenas libero dui, faucibus vel
-                  pharetra non, eleifend sit amet felis. Etiam metus nibh,
-                  auctor non orci in, consectetur pretium enim
-                </p>
-                <div className="image">
-                  <Image
-                    src="/images/product/description-2.jpg"
-                    alt=""
-                    className="lazyload"
-                    width={900}
-                    height={506}
-                  />
-                </div>
-                <p className="body-text-3">
-                  Pellentesque quis efficitur leo. Maecenas accumsan est in nibh
-                  interdum, quis dignissim neque scelerisque. Ut suscipit et leo
-                  sit amet lacinia. Sed a laoreet leo, ut tristique risus.
-                  Integer a est ut est semper fermentum nec quis nunc. Phasellus
-                  aliquam neque eget quam gravida, quis venenatis turpis
-                  tristique. Mauris id congue augue. Pellentesque hendrerit
-                  porttitor purus, vel porttitor sem blandit vel. Ut auctor,
-                  nibh tempus volutpat porttitor, urna ligula gravida lacus, non
-                  mollis purus neque ac lorem. Morbi sodales convallis laoreet.
-                  Mauris efficitur convallis odio sed congue.
-                </p>
+                {shortDescription && (
+                  <p className="body-text-3 fw-semibold text-primary mb-3">
+                    {shortDescription}
+                  </p>
+                )}
+
+                {longDescription ? (
+                  <div className="description-content">
+                    {longDescription.split("\n").map(
+                      (paragraph, index) =>
+                        paragraph.trim() && (
+                          <p key={index} className="body-text-3 mb-3">
+                            {paragraph.trim()}
+                          </p>
+                        )
+                    )}
+                  </div>
+                ) : (
+                  <p className="body-text-3">
+                    This high-quality product offers exceptional performance and
+                    reliability. Designed with precision and built to last, it
+                    delivers outstanding value for both professional and
+                    personal use. Experience the difference with this premium
+                    product that combines innovative technology with
+                    user-friendly design.
+                  </p>
+                )}
+
+                {/* Product images can be added here if available */}
+                {product.images && product.images.length > 1 && (
+                  <div className="product-gallery mt-4">
+                    <div className="row">
+                      {product.images.slice(1, 3).map((image, index) => (
+                        <div key={index} className="col-md-6 mb-3">
+                          <div className="image">
+                            <Image
+                              src={image}
+                              alt={`${product.title} - Image ${index + 2}`}
+                              className="lazyload w-100"
+                              width={450}
+                              height={300}
+                              style={{ objectFit: "cover" }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+
+            {/* Product Information Tab */}
             <div className="tab-pane" id="prd-infor" role="tabpanel">
               <div className="tab-main tab-info">
                 <ul className="list-feature">
-                  <li>
-                    <p className="name-feature">Package Dimensions</p>
-                    <p className="property">8 x 8 x 6.7 inches</p>
-                  </li>
-                  <li>
-                    <p className="name-feature">Item Weight</p>
-                    <p className="property">2.2 pounds</p>
-                  </li>
-                  <li>
-                    <p className="name-feature">Manufacturer</p>
-                    <p className="property">Elite Gourmet</p>
-                  </li>
-                  <li>
-                    <p className="name-feature">ASIN</p>
-                    <p className="property">B09H3LWKYQ</p>
-                  </li>
-                  <li>
-                    <p className="name-feature">Country of Origin</p>
-                    <p className="property">China</p>
-                  </li>
-                  <li>
-                    <p className="name-feature">Item model number</p>
-                    <p className="property">EKT1001B</p>
-                  </li>
-                  <li>
-                    <p className="name-feature">Customer Reviews</p>
-                    <div className="w-100 star-review flex-wrap">
-                      <ul className="list-star">
-                        <li>
-                          <i className="icon-star" />
-                        </li>
-                        <li>
-                          <i className="icon-star" />
-                        </li>
-                        <li>
-                          <i className="icon-star" />
-                        </li>
-                        <li>
-                          <i className="icon-star" />
-                        </li>
-                        <li>
-                          <i className="icon-star text-main-4" />
-                        </li>
-                      </ul>
-                      <p className="caption text-main-2">Reviews (1.738)</p>
-                    </div>
-                  </li>
-                  <li>
-                    <p className="name-feature">Date First Available</p>
-                    <p className="property">September 24, 2021</p>
-                  </li>
+                  {brand && (
+                    <li>
+                      <p className="name-feature">Brand</p>
+                      <p className="property">{brand}</p>
+                    </li>
+                  )}
+                  {sku && (
+                    <li>
+                      <p className="name-feature">SKU</p>
+                      <p className="property">{sku}</p>
+                    </li>
+                  )}
+                  {category?.name && (
+                    <li>
+                      <p className="name-feature">Category</p>
+                      <p className="property">{category.name}</p>
+                    </li>
+                  )}
+                  {stock !== undefined && (
+                    <li>
+                      <p className="name-feature">Stock Available</p>
+                      <p className="property">{stock} units</p>
+                    </li>
+                  )}
+
+                  {/* Dynamic specifications */}
+                  {Object.entries(specifications).map(([key, value]) => (
+                    <li key={key}>
+                      <p className="name-feature">{key}</p>
+                      <p className="property">{value}</p>
+                    </li>
+                  ))}
+
+                  {createdAt && (
+                    <li>
+                      <p className="name-feature">Date First Available</p>
+                      <p className="property">{formatDate(createdAt)}</p>
+                    </li>
+                  )}
+
+                  {totalReviews > 0 && (
+                    <li>
+                      <p className="name-feature">Customer Reviews</p>
+                      <div className="w-100 star-review flex-wrap">
+                        <ul className="list-star">
+                          {renderStars(averageRating)}
+                        </ul>
+                        <p className="caption text-main-2">
+                          {averageRating.toFixed(1)} out of 5 - Reviews (
+                          {totalReviews})
+                        </p>
+                      </div>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>
+
+            {/* Reviews Tab */}
             <div className="tab-pane" id="prd-review" role="tabpanel">
               <div className="tab-main tab-review flex-lg-nowrap">
                 <div className="tab-rating-wrap">
                   <div className="rating-percent">
                     <p className="rate-percent">
-                      4.8 <span>/ 5</span>
+                      {averageRating.toFixed(1)} <span>/ 5</span>
                     </p>
                     <ul className="list-star justify-content-center">
-                      <li>
-                        <i className="icon-star" />
-                      </li>
-                      <li>
-                        <i className="icon-star" />
-                      </li>
-                      <li>
-                        <i className="icon-star" />
-                      </li>
-                      <li>
-                        <i className="icon-star" />
-                      </li>
-                      <li>
-                        <i className="icon-star text-main-4" />
-                      </li>
+                      {renderStars(averageRating)}
                     </ul>
-                    <p className="text-cl-3">Based on 1.738 reviews</p>
+                    <p className="text-cl-3">
+                      {totalReviews > 0
+                        ? `Based on ${totalReviews} review${
+                            totalReviews !== 1 ? "s" : ""
+                          }`
+                        : "No reviews yet"}
+                    </p>
                   </div>
-                  <ul className="rating-progress-list">
-                    <li>
-                      <p className="start-number body-text-3">
-                        5<i className="icon-star text-third" />
-                      </p>
-                      <div className="rating-progress">
-                        <div
-                          className="progress style-2"
-                          role="progressbar"
-                          aria-label="Basic example"
-                          aria-valuenow={0}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        >
-                          <div
-                            className="progress-bar"
-                            style={{ width: "100%" }}
-                          />
-                        </div>
-                      </div>
-                      <p className="count-review body-text-3">100</p>
-                    </li>
-                    <li>
-                      <p className="start-number body-text-3">
-                        4<i className="icon-star text-third" />
-                      </p>
-                      <div className="rating-progress">
-                        <div
-                          className="progress style-2"
-                          role="progressbar"
-                          aria-label="Basic example"
-                          aria-valuenow={0}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        >
-                          <div
-                            className="progress-bar"
-                            style={{ width: "80%" }}
-                          />
-                        </div>
-                      </div>
-                      <p className="count-review body-text-3">87</p>
-                    </li>
-                    <li>
-                      <p className="start-number body-text-3">
-                        3<i className="icon-star text-third" />
-                      </p>
-                      <div className="rating-progress">
-                        <div
-                          className="progress style-2"
-                          role="progressbar"
-                          aria-label="Basic example"
-                          aria-valuenow={0}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        >
-                          <div
-                            className="progress-bar"
-                            style={{ width: "60%" }}
-                          />
-                        </div>
-                      </div>
-                      <p className="count-review body-text-3">32</p>
-                    </li>
-                    <li>
-                      <p className="start-number body-text-3">
-                        2<i className="icon-star text-third" />
-                      </p>
-                      <div className="rating-progress">
-                        <div
-                          className="progress style-2"
-                          role="progressbar"
-                          aria-label="Basic example"
-                          aria-valuenow={0}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        >
-                          <div
-                            className="progress-bar"
-                            style={{ width: "40%" }}
-                          />
-                        </div>
-                      </div>
-                      <p className="count-review body-text-3">24</p>
-                    </li>
-                    <li>
-                      <p className="start-number body-text-3">
-                        1<i className="icon-star text-third" />
-                      </p>
-                      <div className="rating-progress">
-                        <div
-                          className="progress style-2"
-                          role="progressbar"
-                          aria-label="Basic example"
-                          aria-valuenow={0}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        >
-                          <div
-                            className="progress-bar"
-                            style={{ width: "0%" }}
-                          />
-                        </div>
-                      </div>
-                      <p className="count-review body-text-3">0</p>
-                    </li>
-                  </ul>
+
+                  {totalReviews > 0 && (
+                    <ul className="rating-progress-list">
+                      {[5, 4, 3, 2, 1].map((rating) => (
+                        <li key={rating}>
+                          <p className="start-number body-text-3">
+                            {rating}
+                            <i className="icon-star text-third" />
+                          </p>
+                          <div className="rating-progress">
+                            <div
+                              className="progress style-2"
+                              role="progressbar"
+                              aria-label={`${rating} star reviews`}
+                              aria-valuenow={calculateRatingPercentage(rating)}
+                              aria-valuemin={0}
+                              aria-valuemax={100}
+                            >
+                              <div
+                                className="progress-bar"
+                                style={{
+                                  width: `${calculateRatingPercentage(
+                                    rating
+                                  )}%`,
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <p className="count-review body-text-3">
+                            {ratingDistribution[rating] || 0}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
                   <div className="rating-filter-wrap">
                     <p className="title-sidebar fw-bold">Filter by</p>
                     <ul className="rating-filter-list">
@@ -390,25 +289,21 @@ export default function Description() {
                           All
                         </a>
                       </li>
-                      <li>
-                        <a href="#">5 sao (8)</a>
-                      </li>
-                      <li>
-                        <a href="#">4 sao (12)</a>
-                      </li>
-                      <li>
-                        <a href="#">3 sao (23)</a>
-                      </li>
-                      <li>
-                        <a href="#">2 sao (10)</a>
-                      </li>
-                      <li>
-                        <a href="#">1 sao (0)</a>
-                      </li>
+                      {[5, 4, 3, 2, 1].map(
+                        (rating) =>
+                          ratingDistribution[rating] > 0 && (
+                            <li key={rating}>
+                              <a href="#">
+                                {rating} star ({ratingDistribution[rating]})
+                              </a>
+                            </li>
+                          )
+                      )}
                     </ul>
                   </div>
+
                   <div className="add-comment-wrap">
-                    <h5 className="fw-semibold">Add your comment</h5>
+                    <h5 className="fw-semibold">Add your review</h5>
                     <div>
                       <form action="#" className="form-add-comment">
                         <fieldset className="rate">
@@ -433,204 +328,63 @@ export default function Description() {
                         </fieldset>
                         <fieldset>
                           <label>Name:</label>
-                          <input
-                            type="text"
-                            placeholder="Your name"
-                            required=""
-                          />
+                          <input type="text" placeholder="Your name" required />
                         </fieldset>
                         <fieldset>
                           <label>Email:</label>
                           <input
-                            type="text"
+                            type="email"
                             placeholder="Your email"
-                            required=""
+                            required
                           />
                         </fieldset>
                         <fieldset className="align-items-sm-start">
-                          <label>Comment:</label>
-                          <textarea placeholder="Message" defaultValue={""} />
+                          <label>Review:</label>
+                          <textarea
+                            placeholder="Write your review here..."
+                            rows={4}
+                            defaultValue=""
+                          />
                         </fieldset>
                         <div className="btn-submit">
                           <button
                             type="submit"
                             className="tf-btn btn-gray btn-large-2"
                           >
-                            <span className="text-white">Add Review</span>
+                            <span className="text-white">Submit Review</span>
                           </button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
+
                 <div className="tab-review-wrap">
-                  <ul className="review-list">
-                    <li className="box-review">
-                      <div className="avt">
-                        <Image
-                          alt=""
-                          src="/images/avatar/review-1.jpg"
-                          width={100}
-                          height={100}
-                        />
-                      </div>
-                      <div className="review-content">
-                        <div className="author-wrap">
-                          <h6 className="name fw-semibold">
-                            <a href="#" className="link">
-                              Cameron Williamson
-                            </a>
-                          </h6>
-                          <ul className="verified">
-                            <li className="body-small">Color: Black</li>
-                            <li className="body-small fw-semibold text-main-2">
-                              Verified Purchase
-                            </li>
-                          </ul>
-                          <ul className="list-star">
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star text-main-4" />
-                            </li>
-                          </ul>
-                        </div>
-                        <p className="text-review">
-                          Bought this nice little electric hot water kettle for
-                          an overnight date. She enjoyed tea and the hotel did
-                          not offer tea in the room. Problem solved! This kettle
-                          did its job, through the evening and into the morning
-                          we enjoyed many cups of nice, loose leaf tea. Too bad
-                          she ended up not liking me and eventually ghosted me.
-                          But, the tea was great thanks to this electric kettle.
-                          Highly recommend!
+                  {totalReviews > 0 ? (
+                    <ul className="review-list">
+                      {/* Reviews will be populated here when available from API */}
+                      <li className="text-center py-4">
+                        <p className="body-text-3 text-main-2">
+                          Reviews will be displayed here when available.
                         </p>
-                        <p className="date-review body-small">
-                          14/12/2020 lúc 17:20
-                        </p>
-                      </div>
-                    </li>
-                    <li className="box-review">
-                      <div className="avt">
-                        <Image
-                          alt=""
-                          src="/images/avatar/review-5.jpg"
-                          width={100}
-                          height={100}
-                        />
-                      </div>
-                      <div className="review-content">
-                        <div className="author-wrap">
-                          <h6 className="name fw-semibold">
-                            <a href="#" className="link">
-                              Cameron Williamson
-                            </a>
-                          </h6>
-                          <ul className="verified">
-                            <li className="body-small">Color: Black</li>
-                            <li className="body-small fw-semibold text-main-2">
-                              Verified Purchase
-                            </li>
-                          </ul>
-                          <ul className="list-star">
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star text-main-4" />
-                            </li>
-                          </ul>
-                        </div>
-                        <p className="text-review">
-                          Nullam ornare a magna quis aliquet. Duis suscipit eros
-                          in suscipit venenatis. Pellentesque quis efficitur
-                          leo. Maecenas accumsan est in nibh interdum, quis
-                          dignissim neque scelerisque. Ut suscipit et leo sit
-                          amet lacinia. Sed a laoreet leo, ut tristique risus.
-                          Integer a est ut est semper fermentum nec quis nunc.
-                          Phasellus aliquam neque eget quam gravida, quis
-                          venenatis turpis tristique. Mauris id congue augue.
-                          Pellentesque hendrerit porttitor purus, vel porttitor
-                          sem blandit vel.
-                        </p>
-                        <p className="date-review body-small">
-                          14/12/2020 lúc 17:20
-                        </p>
-                      </div>
-                    </li>
-                    <li className="box-review">
-                      <div className="avt">
-                        <Image
-                          alt=""
-                          src="/images/avatar/review-6.jpg"
-                          width={100}
-                          height={100}
-                        />
-                      </div>
-                      <div className="review-content">
-                        <div className="author-wrap">
-                          <h6 className="name fw-semibold">
-                            <a href="#" className="link">
-                              Cameron Williamson
-                            </a>
-                          </h6>
-                          <ul className="verified">
-                            <li className="body-small">Color: Black</li>
-                            <li className="body-small fw-semibold text-main-2">
-                              Verified Purchase
-                            </li>
-                          </ul>
-                          <ul className="list-star">
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star" />
-                            </li>
-                            <li>
-                              <i className="icon-star text-main-4" />
-                            </li>
-                          </ul>
-                        </div>
-                        <p className="text-review">
-                          Suspendisse efficitur velit quis sodales facilisis.
-                          Aenean id enim nec purus interdum semper. In hac
-                          habitasse platea dictumst. Nulla posuere ac ligula sit
-                          amet posuere. Curabitur ultricies non dui ut blandit.
-                          In quis nulla nec tellus rutrum porttitor. Sed
-                          pharetra magna diam, et lacinia tortor congue ut.
-                        </p>
-                        <p className="date-review body-small">
-                          14/12/2020 lúc 17:20
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
+                      </li>
+                    </ul>
+                  ) : (
+                    <div className="text-center py-5">
+                      <h5 className="fw-semibold mb-3">No Reviews Yet</h5>
+                      <p className="body-text-3 text-main-2 mb-4">
+                        Be the first to review this product and help others make
+                        informed decisions.
+                      </p>
+                      <a
+                        href="#"
+                        className="tf-btn btn-primary"
+                        onClick={handleWriteReview}
+                      >
+                        Write First Review
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
