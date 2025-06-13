@@ -1,17 +1,14 @@
 "use client";
-
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
-
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (field) => (e) => {
@@ -21,6 +18,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     try {
       const response = await axios.post(
         "https://unique.rightinfoservice.com/api/auth/login",
@@ -28,13 +26,53 @@ export default function Login() {
       );
 
       if (response.data.token) {
+        // Store token in localStorage
         localStorage.setItem("token", response.data.token);
+
+        // Close the modal first
+        const modal = document.getElementById("log");
+        if (modal) {
+          // If using Bootstrap modal
+          const bootstrapModal = window.bootstrap?.Modal?.getInstance(modal);
+          if (bootstrapModal) {
+            bootstrapModal.hide();
+          } else {
+            // Fallback: remove modal manually
+            modal.style.display = "none";
+            modal.classList.remove("show");
+            document.body.classList.remove("modal-open");
+
+            // Remove backdrop if it exists
+            const backdrop = document.querySelector(".modal-backdrop");
+            if (backdrop) {
+              backdrop.remove();
+            }
+          }
+        }
+
+        // Show success message
         alert("Signed in successfully!");
-        router.push("/");
+
+        // Add a small delay to ensure modal is closed before navigation
+        setTimeout(() => {
+          router.push("/");
+          // Force a page refresh to ensure the app state is updated
+          window.location.href = "/";
+        }, 100);
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Login failed. Please check your credentials.");
+
+      // More detailed error handling
+      if (error.response?.data?.message) {
+        alert(`Login failed: ${error.response.data.message}`);
+      } else if (error.response?.status === 401) {
+        alert("Invalid credentials. Please check your email and password.");
+      } else if (error.response?.status >= 500) {
+        alert("Server error. Please try again later.");
+      } else {
+        alert("Login failed. Please check your credentials and try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -55,11 +93,12 @@ export default function Login() {
                 <fieldset>
                   <label className="fw-semibold body-md-2"> Email * </label>
                   <input
-                    type="text"
+                    type="email"
                     placeholder="Your email"
                     onChange={handleChange("email")}
                     value={inputs.email}
                     required
+                    disabled={isLoading}
                   />
                 </fieldset>
                 <fieldset>
@@ -70,6 +109,7 @@ export default function Login() {
                     onChange={handleChange("password")}
                     value={inputs.password}
                     required
+                    disabled={isLoading}
                   />
                 </fieldset>
                 <a href="#" className="link text-end body-text-3">
