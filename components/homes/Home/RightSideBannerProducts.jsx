@@ -6,8 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import AddToCart from "@/components/common/AddToCart";
 import AddToWishlist from "@/components/common/AddToWishlist";
-import AddToQuickview from "@/components/common/AddToQuickview";
-import AddToCompare from "@/components/common/AddToCompare";
+
 
 export default function Products7() {
   const [products, setProducts] = useState([]);
