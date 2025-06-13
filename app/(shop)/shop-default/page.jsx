@@ -1,6 +1,6 @@
 import React from "react";
 import Header4 from "@/components/headers/Header4";
-import Products1 from "@/components/products/Products1";
+import Products1 from "@/components/ProductSection/Products1";
 import RecentProducts from "@/components/common/RecentProducts";
 import Features2 from "@/components/common/Features2";
 import Footer1 from "@/components/footers/Footer1";

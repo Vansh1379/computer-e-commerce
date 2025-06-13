@@ -5,7 +5,7 @@ import { products3 } from "@/data/products";
 
 import ShowLength from "./ShowLength";
 import { initialState, reducer } from "@/reducer/filterReducer";
-import LayoutHandler from "./LayoutHandler";
+import LayoutHandler from "../ProductSection/LayoutHandler";
 import ProductCards3 from "../productCards/ProductCards3";
 import FilterSidebar from "./FilterSidebar";
 
