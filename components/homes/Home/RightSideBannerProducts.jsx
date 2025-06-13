@@ -7,7 +7,6 @@ import Image from "next/image";
 import AddToCart from "@/components/common/AddToCart";
 import AddToWishlist from "@/components/common/AddToWishlist";
 
-
 export default function Products7() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,6 +68,12 @@ export default function Products7() {
   // Helper function to format price
   const formatPrice = (price) => {
     return parseFloat(price).toFixed(2);
+  };
+
+  // Helper function to generate product URL
+  const getProductUrl = (product) => {
+    // Use ID for consistency with your product detail page structure
+    return `/product-detail/${product.id}`;
   };
 
   if (loading) {
@@ -161,14 +166,15 @@ export default function Products7() {
                 <SwiperSlide key={product.id} className="swiper-slide">
                   <div className="card-product style-small style-img-border">
                     <div className="card-product-wrapper">
+                      {/* Product Image - Clickable */}
                       <Link
-                        href={`/product-detail/${product.slug || product.id}`}
+                        href={getProductUrl(product)}
                         className="product-img"
                       >
                         <Image
                           className="img-product lazyload"
                           src={getPrimaryImage(product.images)}
-                          alt={product.name}
+                          alt={product.name || "Product image"}
                           width={300}
                           height={300}
                           onError={(e) => {
@@ -178,7 +184,7 @@ export default function Products7() {
                         <Image
                           className="img-hover lazyload"
                           src={getHoverImage(product.images)}
-                          alt={product.name}
+                          alt={product.name || "Product hover image"}
                           width={300}
                           height={300}
                           onError={(e) => {
@@ -207,10 +213,9 @@ export default function Products7() {
                           <p className="caption text-main-2 font-2">
                             {product.category?.name || product.brand}
                           </p>
+                          {/* Product Title - Also Clickable */}
                           <Link
-                            href={`/product-detail/${
-                              product.slug || product.id
-                            }`}
+                            href={getProductUrl(product)}
                             className="name-product body-md-2 fw-semibold text-secondary link"
                             title={product.name}
                           >
@@ -224,7 +229,7 @@ export default function Products7() {
                           {product.oldPrice &&
                             parseFloat(product.oldPrice) >
                               parseFloat(product.newPrice) && (
-                              <span className="old-price body-md-2 text-main-2 fw-normal">
+                              <span className="old-price body-md-2 text-main-2 fw-normal text-decoration-line-through ms-2">
                                 ₹{formatPrice(product.oldPrice)}
                               </span>
                             )}
@@ -239,6 +244,9 @@ export default function Products7() {
           ) : (
             <div className="text-center py-5">
               <p>No featured products available at the moment.</p>
+              <Link href="/shop-default" className="btn btn-primary mt-3">
+                Browse All Products
+              </Link>
             </div>
           )}
 
@@ -248,7 +256,7 @@ export default function Products7() {
             data-wow-delay="0s"
             style={{ order: 2 }}
           >
-            <a href="#" className="image h-100">
+            <Link href="/shop-default" className="image h-100">
               <Image
                 src="https://i.pinimg.com/736x/be/03/92/be0392abf9edca2f8e75d8c0f2a1cfa7.jpg"
                 alt="Featured Banner"
@@ -256,7 +264,7 @@ export default function Products7() {
                 width={400}
                 height={650}
               />
-            </a>
+            </Link>
             <div className="content">
               <div className="box-top">
                 <p
@@ -268,7 +276,7 @@ export default function Products7() {
               </div>
               <div className="box-bottom">
                 <Link
-                  href={`/shop-default`}
+                  href="/shop-default"
                   className="link h3 mb-0 lh-xl-49 text-white"
                 >
                   Latest &amp; <br />

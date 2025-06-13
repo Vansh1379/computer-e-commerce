@@ -169,21 +169,22 @@ export default function Products() {
                   : {})}
               >
                 <div className="card-product-wrapper">
+                  {/* Main product image - clickable */}
                   <Link
-                    href={`/product-detail/${product.slug || product.id}`}
+                    href={`/product-detail/${product.id}`}
                     className="product-img"
                   >
                     <Image
                       className="img-product lazyload"
                       src={product.imgSrc}
-                      alt="image-product"
+                      alt={product.title || "Product image"}
                       width={product.width}
                       height={product.height}
                     />
                     <Image
                       className="img-hover lazyload"
                       src={product.imgHover}
-                      alt="image-product"
+                      alt={product.title || "Product hover image"}
                       width={product.width}
                       height={product.height}
                     />
@@ -209,8 +210,9 @@ export default function Products() {
                       <p className="caption text-main-2 font-2">
                         {product.category}
                       </p>
+                      {/* Product title - also clickable */}
                       <Link
-                        href={`/product-detail/${product.slug || product.id}`}
+                        href={`/product-detail/${product.id}`}
                         className="name-product body-md-2 fw-semibold text-secondary link"
                       >
                         {product.title}
@@ -220,6 +222,12 @@ export default function Products() {
                       <span className="new-price price-text fw-medium">
                         ₹{product.price.toFixed(2)}
                       </span>
+                      {product.originalPrice &&
+                        product.originalPrice > product.price && (
+                          <span className="old-price text-decoration-line-through text-muted ms-2">
+                            ₹{product.originalPrice.toFixed(2)}
+                          </span>
+                        )}
                     </p>
                   </div>
                 </div>
